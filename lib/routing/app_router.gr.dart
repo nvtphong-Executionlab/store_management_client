@@ -12,13 +12,13 @@ import 'package:auto_route/auto_route.dart' as _i10;
 import 'package:store_management_client/presentation/authentication/create_store_screen.dart'
     as _i7;
 import 'package:store_management_client/presentation/authentication/join_store_screen.dart'
-    as _i8;
+    as _i6;
 import 'package:store_management_client/presentation/authentication/login_screen.dart'
     as _i5;
 import 'package:store_management_client/presentation/authentication/no_store_screen.dart'
-    as _i6;
-import 'package:store_management_client/presentation/authentication/waiting_approve_screen.dart'
     as _i9;
+import 'package:store_management_client/presentation/authentication/waiting_approve_screen.dart'
+    as _i8;
 import 'package:store_management_client/presentation/home/home_screen.dart'
     as _i2;
 import 'package:store_management_client/presentation/home/statistic_screen.dart'
@@ -63,10 +63,10 @@ abstract class $AppRouter extends _i10.RootStackRouter {
         child: const _i5.LoginScreen(),
       );
     },
-    NoStoreRoute.name: (routeData) {
+    JoinStoreRoute.name: (routeData) {
       return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i6.NoStoreScreen(),
+        child: const _i6.JoinStoreScreen(),
       );
     },
     CreateStoreRoute.name: (routeData) {
@@ -75,16 +75,16 @@ abstract class $AppRouter extends _i10.RootStackRouter {
         child: const _i7.CreateStoreScreen(),
       );
     },
-    JoinStoreRoute.name: (routeData) {
-      return _i10.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i8.JoinStoreScreen(),
-      );
-    },
     WaitingApproveRoute.name: (routeData) {
       return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i9.WaitingApproveScreen(),
+        child: const _i8.WaitingApproveScreen(),
+      );
+    },
+    NoStoreRoute.name: (routeData) {
+      return _i10.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i9.NoStoreScreen(),
       );
     },
   };
@@ -161,15 +161,15 @@ class LoginRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i6.NoStoreScreen]
-class NoStoreRoute extends _i10.PageRouteInfo<void> {
-  const NoStoreRoute({List<_i10.PageRouteInfo>? children})
+/// [_i6.JoinStoreScreen]
+class JoinStoreRoute extends _i10.PageRouteInfo<void> {
+  const JoinStoreRoute({List<_i10.PageRouteInfo>? children})
       : super(
-          NoStoreRoute.name,
+          JoinStoreRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'NoStoreRoute';
+  static const String name = 'JoinStoreRoute';
 
   static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
 }
@@ -189,21 +189,7 @@ class CreateStoreRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.JoinStoreScreen]
-class JoinStoreRoute extends _i10.PageRouteInfo<void> {
-  const JoinStoreRoute({List<_i10.PageRouteInfo>? children})
-      : super(
-          JoinStoreRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'JoinStoreRoute';
-
-  static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i9.WaitingApproveScreen]
+/// [_i8.WaitingApproveScreen]
 class WaitingApproveRoute extends _i10.PageRouteInfo<void> {
   const WaitingApproveRoute({List<_i10.PageRouteInfo>? children})
       : super(
@@ -212,6 +198,20 @@ class WaitingApproveRoute extends _i10.PageRouteInfo<void> {
         );
 
   static const String name = 'WaitingApproveRoute';
+
+  static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i9.NoStoreScreen]
+class NoStoreRoute extends _i10.PageRouteInfo<void> {
+  const NoStoreRoute({List<_i10.PageRouteInfo>? children})
+      : super(
+          NoStoreRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'NoStoreRoute';
 
   static const _i10.PageInfo<void> page = _i10.PageInfo<void>(name);
 }

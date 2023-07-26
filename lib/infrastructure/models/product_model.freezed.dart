@@ -20,11 +20,16 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProductModel {
-  String get productID => throw _privateConstructorUsedError;
+  int get ID => throw _privateConstructorUsedError;
+  set ID(int value) => throw _privateConstructorUsedError;
   String get productName => throw _privateConstructorUsedError;
+  set productName(String value) => throw _privateConstructorUsedError;
   int get stock => throw _privateConstructorUsedError;
+  set stock(int value) => throw _privateConstructorUsedError;
   double get priceIn => throw _privateConstructorUsedError;
+  set priceIn(double value) => throw _privateConstructorUsedError;
   double get priceOut => throw _privateConstructorUsedError;
+  set priceOut(double value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,11 +44,7 @@ abstract class $ProductModelCopyWith<$Res> {
       _$ProductModelCopyWithImpl<$Res, ProductModel>;
   @useResult
   $Res call(
-      {String productID,
-      String productName,
-      int stock,
-      double priceIn,
-      double priceOut});
+      {int ID, String productName, int stock, double priceIn, double priceOut});
 }
 
 /// @nodoc
@@ -59,17 +60,17 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? productID = null,
+    Object? ID = null,
     Object? productName = null,
     Object? stock = null,
     Object? priceIn = null,
     Object? priceOut = null,
   }) {
     return _then(_value.copyWith(
-      productID: null == productID
-          ? _value.productID
-          : productID // ignore: cast_nullable_to_non_nullable
-              as String,
+      ID: null == ID
+          ? _value.ID
+          : ID // ignore: cast_nullable_to_non_nullable
+              as int,
       productName: null == productName
           ? _value.productName
           : productName // ignore: cast_nullable_to_non_nullable
@@ -99,11 +100,7 @@ abstract class _$$_ProductModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String productID,
-      String productName,
-      int stock,
-      double priceIn,
-      double priceOut});
+      {int ID, String productName, int stock, double priceIn, double priceOut});
 }
 
 /// @nodoc
@@ -117,17 +114,17 @@ class __$$_ProductModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? productID = null,
+    Object? ID = null,
     Object? productName = null,
     Object? stock = null,
     Object? priceIn = null,
     Object? priceOut = null,
   }) {
     return _then(_$_ProductModel(
-      productID: null == productID
-          ? _value.productID
-          : productID // ignore: cast_nullable_to_non_nullable
-              as String,
+      ID: null == ID
+          ? _value.ID
+          : ID // ignore: cast_nullable_to_non_nullable
+              as int,
       productName: null == productName
           ? _value.productName
           : productName // ignore: cast_nullable_to_non_nullable
@@ -149,56 +146,40 @@ class __$$_ProductModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.pascal)
 class _$_ProductModel extends _ProductModel {
-  const _$_ProductModel(
-      {required this.productID,
-      required this.productName,
+  _$_ProductModel(
+      {this.ID = 0,
+      this.productName = '',
       this.stock = 0,
-      this.priceIn = 0,
-      required this.priceOut})
+      this.priceIn = 0.0,
+      this.priceOut = 0.0})
       : super._();
 
   factory _$_ProductModel.fromJson(Map<String, dynamic> json) =>
       _$$_ProductModelFromJson(json);
 
   @override
-  final String productID;
-  @override
-  final String productName;
+  @JsonKey()
+  int ID;
   @override
   @JsonKey()
-  final int stock;
+  String productName;
   @override
   @JsonKey()
-  final double priceIn;
+  int stock;
   @override
-  final double priceOut;
+  @JsonKey()
+  double priceIn;
+  @override
+  @JsonKey()
+  double priceOut;
 
   @override
   String toString() {
-    return 'ProductModel(productID: $productID, productName: $productName, stock: $stock, priceIn: $priceIn, priceOut: $priceOut)';
+    return 'ProductModel(ID: $ID, productName: $productName, stock: $stock, priceIn: $priceIn, priceOut: $priceOut)';
   }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_ProductModel &&
-            (identical(other.productID, productID) ||
-                other.productID == productID) &&
-            (identical(other.productName, productName) ||
-                other.productName == productName) &&
-            (identical(other.stock, stock) || other.stock == stock) &&
-            (identical(other.priceIn, priceIn) || other.priceIn == priceIn) &&
-            (identical(other.priceOut, priceOut) ||
-                other.priceOut == priceOut));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, productID, productName, stock, priceIn, priceOut);
 
   @JsonKey(ignore: true)
   @override
@@ -215,27 +196,32 @@ class _$_ProductModel extends _ProductModel {
 }
 
 abstract class _ProductModel extends ProductModel {
-  const factory _ProductModel(
-      {required final String productID,
-      required final String productName,
-      final int stock,
-      final double priceIn,
-      required final double priceOut}) = _$_ProductModel;
-  const _ProductModel._() : super._();
+  factory _ProductModel(
+      {int ID,
+      String productName,
+      int stock,
+      double priceIn,
+      double priceOut}) = _$_ProductModel;
+  _ProductModel._() : super._();
 
   factory _ProductModel.fromJson(Map<String, dynamic> json) =
       _$_ProductModel.fromJson;
 
   @override
-  String get productID;
+  int get ID;
+  set ID(int value);
   @override
   String get productName;
+  set productName(String value);
   @override
   int get stock;
+  set stock(int value);
   @override
   double get priceIn;
+  set priceIn(double value);
   @override
   double get priceOut;
+  set priceOut(double value);
   @override
   @JsonKey(ignore: true)
   _$$_ProductModelCopyWith<_$_ProductModel> get copyWith =>

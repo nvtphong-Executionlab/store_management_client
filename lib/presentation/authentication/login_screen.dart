@@ -1,18 +1,20 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:store_management_client/infrastructure/repositories/auth_repo.dart';
 import 'package:store_management_client/routing/app_router.gr.dart';
 
 import '../../utils/constants/padding.dart';
 
 @RoutePage()
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool isLogin = true;
 
   @override
@@ -62,8 +64,9 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 20,
             ),
             FilledButton(
-              onPressed: () {
+              onPressed: () async {
                 if (isLogin) {
+                  await ref.read(authRepoProvider).login();
                   context.router.replace(const NoStoreRoute());
                 }
               },

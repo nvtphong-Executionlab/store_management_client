@@ -1,51 +1,48 @@
-import 'dart:math';
-
 import 'package:dartz/dartz.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:store_management_client/infrastructure/models/failure_model.dart';
 import 'package:store_management_client/infrastructure/models/product_model.dart';
+import 'package:store_management_client/infrastructure/models/result_model.dart';
+import 'package:store_management_client/service/http_service.dart';
+
+import '../../service/request_param/product_param.dart';
 part 'product_repo.g.dart';
 
 class ProductRepository {
-  Future<Either<FailureModel, List<ProductModel>>> getProducts() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    final r = Random();
+  final HttpService _httpService;
+  ProductRepository(this._httpService);
 
-    return right(List.generate(10, (index) {
-      final id = String.fromCharCodes(List.generate(10, (index) => r.nextInt(33) + 89));
-      final name = String.fromCharCodes(List.generate(20, (index) => r.nextInt(33) + 89));
-
-      return ProductModel(
-          productID: id,
-          productName: name,
-          priceOut: r.nextInt(33) * 1000,
-          priceIn: r.nextInt(33) * 1000,
-          stock: r.nextInt(33));
-    }));
+  Future<Either<FailureModel, PaginationResponse<ProductModel>>> getProducts({int page = 1}) async {
+    return _httpService.getData<PaginationResponse<ProductModel>>(ListProductParam(page: page));
   }
 
-  Future<Either<FailureModel, ProductModel>> searchProduct(String keyword) async {
-    final r = Random();
-    await Future.delayed(const Duration(milliseconds: 500));
-    final id = String.fromCharCodes(List.generate(10, (index) => r.nextInt(33) + 89));
-    final name = String.fromCharCodes(List.generate(20, (index) => r.nextInt(33) + 89));
+  Future<Either<FailureModel, ProductModel?>> searchProduct(String keyword) async {
+    final result = await _httpService.getData<PaginationResponse<ProductModel>>(SearchProductParam(keyword));
+    return result.fold((l) => left(l), (r) => right(r.data.isEmpty ? null : r.data.first));
+    // final r = Random();
+    // await Future.delayed(const Duration(milliseconds: 500));
+    // final id = String.fromCharCodes(List.generate(10, (index) => r.nextInt(33) + 89));
+    // final name = String.fromCharCodes(List.generate(20, (index) => r.nextInt(33) + 89));
 
-    return right(ProductModel(productID: id, productName: name, priceOut: 100000, priceIn: 900000));
+    // return right(ProductModel(productID: id, productName: name, priceOut: 100000, priceIn: 900000));
   }
-}
 
-@riverpod
-ProductRepository productRepository(ProductRepositoryRef ref) {
-  return ProductRepository();
+  Future<Either<FailureModel, ProductModel>> addProduct(
+      int id, String name, double priceIn, double priceOut, int stock) async {
+    return _httpService.postData<ProductModel>(
+        AddProductParam(id: id, stock: stock, priceIn: priceIn, priceOut: priceOut, name: name));
+  }
 }
 
 @riverpod
 FutureOr<ProductModel?> searchProduct(SearchProductRef ref, {required String keyword}) async {
-  if (keyword.isEmpty || keyword != '1') {
-    return null;
-  }
-
-  final productRepo = ref.watch(productRepositoryProvider);
+  final productRepo = ref.watch(productRepoProvider);
   final result = await productRepo.searchProduct(keyword);
   return result.fold((l) => null, (r) => r);
+}
+
+@riverpod
+ProductRepository productRepo(ProductRepoRef ref) {
+  final httpService = ref.watch(httpServiceProvider);
+  return ProductRepository(httpService);
 }

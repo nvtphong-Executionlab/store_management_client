@@ -6,23 +6,7 @@ part of 'product_repo.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$productRepositoryHash() => r'1143e6a957468f07814b030b8e53d8ea1ddb037b';
-
-/// See also [productRepository].
-@ProviderFor(productRepository)
-final productRepositoryProvider =
-    AutoDisposeProvider<ProductRepository>.internal(
-  productRepository,
-  name: r'productRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$productRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef ProductRepositoryRef = AutoDisposeProviderRef<ProductRepository>;
-String _$searchProductHash() => r'03bbc63ddecdd82c6c7d9b2a1c43ee660f50dd8c';
+String _$searchProductHash() => r'2c619e945f93db0b313e55edff6e54fbf4151a03';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -125,4 +109,19 @@ class SearchProductProvider extends AutoDisposeFutureProvider<ProductModel?> {
     return _SystemHash.finish(hash);
   }
 }
+
+String _$productRepoHash() => r'7589f0474fad3852e80981f7698f7ca7f5325cc9';
+
+/// See also [productRepo].
+@ProviderFor(productRepo)
+final productRepoProvider = AutoDisposeProvider<ProductRepository>.internal(
+  productRepo,
+  name: r'productRepoProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$productRepoHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef ProductRepoRef = AutoDisposeProviderRef<ProductRepository>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

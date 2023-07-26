@@ -8,18 +8,18 @@ part of 'product_model.dart';
 
 _$_ProductModel _$$_ProductModelFromJson(Map<String, dynamic> json) =>
     _$_ProductModel(
-      productID: json['productID'] as String,
-      productName: json['productName'] as String,
-      stock: json['stock'] as int? ?? 0,
-      priceIn: (json['priceIn'] as num?)?.toDouble() ?? 0,
-      priceOut: (json['priceOut'] as num).toDouble(),
+      ID: json['ID'] as int? ?? 0,
+      productName: json['ProductName'] as String? ?? '',
+      stock: json['Stock'] as int? ?? 0,
+      priceIn: (json['PriceIn'] as num?)?.toDouble() ?? 0.0,
+      priceOut: (json['PriceOut'] as num?)?.toDouble() ?? 0.0,
     );
 
 Map<String, dynamic> _$$_ProductModelToJson(_$_ProductModel instance) =>
     <String, dynamic>{
-      'productID': instance.productID,
-      'productName': instance.productName,
-      'stock': instance.stock,
-      'priceIn': instance.priceIn,
-      'priceOut': instance.priceOut,
+      'ID': instance.ID,
+      'ProductName': instance.productName,
+      'Stock': instance.stock,
+      'PriceIn': instance.priceIn,
+      'PriceOut': instance.priceOut,
     };

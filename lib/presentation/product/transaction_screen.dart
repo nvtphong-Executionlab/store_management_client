@@ -23,32 +23,35 @@ class TransactionScreen extends StatelessWidget {
     return DefaultTabController(
       initialIndex: 0,
       length: 2,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: ColoredBox(
-                  color: AppColors.primary,
-                  child: TabBar(
-                      tabs: _tabs
-                          .map((e) => Tab(
-                                text: e.name.toUpperCase(),
-                              ))
-                          .toList()),
+      child: GestureDetector(
+        onTap: FocusManager.instance.primaryFocus?.unfocus,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: ColoredBox(
+                    color: AppColors.primary,
+                    child: TabBar(
+                        tabs: _tabs
+                            .map((e) => Tab(
+                                  text: e.name.toUpperCase(),
+                                ))
+                            .toList()),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: TabBarView(
-                children: _tabs
-                    .map((e) => ProductDetail(
-                          productAction: e,
-                        ))
-                    .toList()),
-          )
-        ],
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                  children: _tabs
+                      .map((e) => CommonProductForm(
+                            productAction: e,
+                          ))
+                      .toList()),
+            )
+          ],
+        ),
       ),
     );
   }
