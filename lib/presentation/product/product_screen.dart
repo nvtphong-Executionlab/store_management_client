@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:store_management_client/application/product_notifier.dart';
 import 'package:store_management_client/infrastructure/models/product_model.dart';
 import 'package:store_management_client/presentation/product/product_detail.dart';
@@ -23,6 +24,8 @@ class ProductScreen extends StatefulHookConsumerWidget {
 
 class _ProductScreenState extends ConsumerState<ProductScreen> {
   final fabkey = GlobalKey<ExpandableFabState>();
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
+
   @override
   Widget build(BuildContext context) {
     final asyncListProduct = ref.watch(productNotifierProvider);
@@ -55,19 +58,6 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
             child: const Icon(Icons.remove),
           ),
         ]),
-
-        // FloatingActionButton.extended(
-        //   onPressed: () {
-        //     showModalBottomSheet(
-        //       context: context,
-        //       builder: (context) => const ProductDetail(
-        //         productAction: ProductAction.edit,
-        //       ),
-        //     );
-        //   },
-        //   label: const Text('Product'),
-        //   icon: const Icon(Icons.qr_code_2),
-        // ),
         body: Padding(
           padding: PaddingConstants.paddingLayout,
           child: Column(
@@ -174,11 +164,21 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                         style: Theme.of(context).textTheme.labelMedium!,
                         child: asyncListProduct.maybeWhen(
                           orElse: () => const Center(child: CircularProgressIndicator()),
-                          data: (response) => ListView.builder(
-                            itemBuilder: (context, index) {
-                              return _buildProductItem(response.data[index]);
+                          data: (response) => SmartRefresher(
+                            controller: _refreshController,
+                            enablePullUp: response.totalPages > response.currentPage,
+                            enablePullDown: false,
+                            onLoading: () async {
+                              await ref.read(productNotifierProvider.notifier).getProducts();
+                              _refreshController.loadComplete();
                             },
-                            itemCount: response.data.length,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return _buildProductItem(response.data[index]);
+                              },
+                              itemCount: response.data.length,
+                            ),
                           ),
                         ),
                       ),

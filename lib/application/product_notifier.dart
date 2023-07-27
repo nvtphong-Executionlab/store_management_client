@@ -5,22 +5,25 @@ import 'package:store_management_client/infrastructure/repositories/product_repo
 
 part 'product_notifier.g.dart';
 
-const _emptyResponse = PaginationResponse<ProductModel>(currentPage: 0, totalItems: 0, totalPages: 0);
+const _emptyResponse = PaginationResponse<ProductModel>(currentPage: 0, totalItems: 0, totalPages: 1);
 
 @riverpod
 class ProductNotifier extends _$ProductNotifier {
   late final ProductRepository _productRepo;
 
   @override
-  FutureOr<PaginationResponse<ProductModel>> build() async {
+  PaginationResponse<ProductModel> build() {
     _productRepo = ref.watch(productRepoProvider);
-    final result = await _productRepo.getProducts();
-    return result.fold((l) => _emptyResponse, (r) => r);
+    getProducts();
+    return _emptyResponse;
   }
 
   Future getProducts() async {
-    final result = await _productRepo.getProducts();
-    state = AsyncData(result.fold((l) => _emptyResponse, (r) => r));
+    final result = await _productRepo.getProducts(page: (state.value?.currentPage ?? 0) + 1);
+
+    state = AsyncData(result.fold((l) => _emptyResponse, (r) {
+      return r.copyWith(data: [...(state.value?.data ?? []), ...r.data]);
+    }));
   }
 
   Future searchProduct({String keyword = ''}) async {
