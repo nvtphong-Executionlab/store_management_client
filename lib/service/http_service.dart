@@ -13,7 +13,7 @@ class HttpService {
   HttpService(this._dio);
 
   Future<Either<FailureModel, T>> getData<T>(IParam param) async {
-    return requestWrapper(_dio.get(
+    return requestWrapper<T>(_dio.get(
       param.link,
       queryParameters: param.queryParam,
       data: param.json,
@@ -21,11 +21,11 @@ class HttpService {
   }
 
   Future<Either<FailureModel, T>> postData<T>(IParam param) async {
-    return requestWrapper(_dio.post(param.link, data: param.json));
+    return requestWrapper<T>(_dio.post(param.link, data: param.json));
   }
 
   Future<Either<FailureModel, T>> putData<T>(IParam param) async {
-    return requestWrapper(_dio.put(param.link, data: param.json));
+    return requestWrapper<T>(_dio.put(param.link, data: param.json));
   }
 
   Future<Either<FailureModel, T>> deleteData<T>(IParam param) async {

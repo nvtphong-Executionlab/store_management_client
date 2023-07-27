@@ -1,21 +1,58 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:store_management_client/application/product_notifier.dart';
 import 'package:store_management_client/infrastructure/models/product_model.dart';
 import 'package:store_management_client/infrastructure/repositories/product_repo.dart';
 
 import '../../application/product_action.dart';
+import '../../application/sale_notifier.dart';
 import '../../utils/colors/colors.dart';
 import '../../utils/constants/padding.dart';
 import '../../utils/styles/text_styles.dart';
 
-class CommonProductForm extends HookConsumerWidget {
+class CommonProductForm extends StatefulHookConsumerWidget {
   const CommonProductForm({super.key, required this.productAction});
   final ProductAction productAction;
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _CommonProductFormState();
+}
+
+class _CommonProductFormState extends ConsumerState<CommonProductForm> {
+  @override
+  Widget build(BuildContext context) {
     final numForm = useState(1);
     final memoProducts = useMemoized(() => <ProductModel>[ProductModel()]);
+
+    void addForm() {
+      memoProducts.add(ProductModel());
+
+      numForm.value += 1;
+    }
+
+    void removeForm() {
+      memoProducts.removeLast();
+      numForm.value -= 1;
+    }
+
+    void reset() {
+      memoProducts.clear();
+      numForm.value = 0;
+      Future(() {
+        memoProducts.add(ProductModel());
+        numForm.value = 1;
+      });
+    }
+
+    double calculateTotal() {
+      double sum = 0;
+      for (var p in memoProducts) {
+        sum += p.priceOut * p.stock;
+      }
+      return sum;
+    }
+
     return GestureDetector(
       onTap: FocusManager.instance.primaryFocus?.unfocus,
       child: Padding(
@@ -27,7 +64,7 @@ class CommonProductForm extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${productAction.name.toUpperCase()} PRODUCT',
+                  '${widget.productAction.name.toUpperCase()} PRODUCT',
                   style: AppTextStyle(context).heading,
                 ),
                 Row(
@@ -35,20 +72,14 @@ class CommonProductForm extends HookConsumerWidget {
                     Visibility(
                       visible: numForm.value > 1,
                       child: IconButton(
-                          onPressed: () {
-                            memoProducts.removeLast();
-                            numForm.value -= 1;
-                          },
+                          onPressed: removeForm,
                           icon: const Icon(
                             Icons.remove_circle_rounded,
                             size: 30,
                           )),
                     ),
                     IconButton(
-                        onPressed: () {
-                          memoProducts.add(ProductModel());
-                          numForm.value += 1;
-                        },
+                        onPressed: addForm,
                         icon: const Icon(
                           Icons.add_circle_rounded,
                           size: 30,
@@ -70,8 +101,12 @@ class CommonProductForm extends HookConsumerWidget {
               ),
               itemBuilder: (context, index) {
                 return ProductForm(
-                  action: productAction,
-                  productModel: memoProducts[index],
+                  action: widget.productAction,
+                  onUpdate: (product) {
+                    setState(() {
+                      memoProducts[index] = product;
+                    });
+                  },
                 );
               },
               itemCount: numForm.value,
@@ -80,11 +115,30 @@ class CommonProductForm extends HookConsumerWidget {
             const SizedBox(
               height: 10,
             ),
+            if (widget.productAction == ProductAction.sell)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [const Text('TOTAL:'), Text('${calculateTotal()}')],
+              ),
+            const SizedBox(
+              height: 10,
+            ),
             FilledButton(
-                onPressed: () {
-                  print(memoProducts);
+                onPressed: () async {
+                  switch (widget.productAction) {
+                    case ProductAction.add:
+                      ref.read(productNotifierProvider.notifier).addProducts(memoProducts);
+                      context.router.root.pop();
+                      break;
+                    case ProductAction.sell:
+                      ref.read(saleNotifierProvider.notifier).sellProducts(memoProducts);
+                      break;
+                    default:
+                      break;
+                  }
+                  reset();
                 },
-                child: Text(productAction.name.toUpperCase())),
+                child: Text(widget.productAction.name.toUpperCase())),
             const SizedBox(
               height: 20,
             ),
@@ -95,26 +149,39 @@ class CommonProductForm extends HookConsumerWidget {
   }
 }
 
-class ProductForm extends HookConsumerWidget {
-  const ProductForm({super.key, required this.action, required this.productModel});
+class ProductForm extends StatefulHookConsumerWidget {
+  const ProductForm({super.key, required this.action, required this.onUpdate});
 
   final ProductAction action;
-  final ProductModel productModel;
+  final Function(ProductModel) onUpdate;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ProductForm> createState() => _ProductFormState();
+}
+
+class _ProductFormState extends ConsumerState<ProductForm> {
+  ProductModel initProduct = ProductModel();
+
+  void updateProductInfo(String productID) {
+    ref.read(searchProductProvider(keyword: productID).future).then((value) {
+      // setState(() {
+      initProduct = value ?? ProductModel();
+      widget.onUpdate(initProduct);
+      // });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return HookBuilder(builder: (_) {
-      final TextEditingController idController = useTextEditingController();
+      final TextEditingController idController = useTextEditingController(text: initProduct.ID.toString());
 
-      final asyncProduct = ref.watch(searchProductProvider(keyword: useValueListenable(idController).text));
-
-      final nameController = useTextEditingController(text: asyncProduct.value?.productName, keys: [asyncProduct]);
+      final nameController = useTextEditingController(text: initProduct.productName, keys: [idController.text]);
       final priceInController =
-          useTextEditingController(text: asyncProduct.value?.priceIn.toString(), keys: [asyncProduct]);
+          useTextEditingController(text: initProduct.priceIn.toString(), keys: [idController.text]);
       final priceOutController =
-          useTextEditingController(text: asyncProduct.value?.priceOut.toString(), keys: [asyncProduct]);
-      final stockController =
-          useTextEditingController(text: asyncProduct.value?.stock.toString(), keys: [asyncProduct]);
+          useTextEditingController(text: initProduct.priceOut.toString(), keys: [idController.text]);
+      final stockController = useTextEditingController(text: initProduct.stock.toString(), keys: [idController.text]);
 
       return GestureDetector(
         onTap: FocusManager.instance.primaryFocus?.unfocus,
@@ -124,7 +191,7 @@ class ProductForm extends HookConsumerWidget {
               TextField(
                 controller: idController,
                 onChanged: (value) {
-                  productModel.ID = int.tryParse(value) ?? 0;
+                  updateProductInfo(value);
                 },
                 decoration: const InputDecoration(
                   hintText: 'Product ID',
@@ -155,9 +222,6 @@ class ProductForm extends HookConsumerWidget {
           ),
           TextField(
             controller: nameController,
-            onChanged: (value) {
-              productModel.productName = value;
-            },
             decoration: const InputDecoration(
               hintText: 'Product Name',
             ),
@@ -165,39 +229,38 @@ class ProductForm extends HookConsumerWidget {
           const SizedBox(
             height: 10,
           ),
-          if (action != ProductAction.sell)
+          if (widget.action != ProductAction.sell)
             TextField(
               controller: priceInController,
-              onChanged: (value) {
-                productModel.priceIn = double.tryParse(value) ?? 0;
-              },
               decoration: const InputDecoration(
                 hintText: 'Price In',
               ),
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
-          if (action != ProductAction.sell)
+          if (widget.action != ProductAction.sell)
             const SizedBox(
               height: 10,
             ),
           TextField(
             controller: priceOutController,
-            onChanged: (value) {
-              productModel.priceOut = double.tryParse(value) ?? 0;
-            },
             decoration: const InputDecoration(
               hintText: 'Price Out',
             ),
+            onChanged: (value) {
+              initProduct = initProduct.copyWith(priceOut: double.tryParse(value) ?? 0);
+              widget.onUpdate(initProduct);
+            },
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
           ),
           const SizedBox(
             height: 10,
           ),
           TextField(
-            onChanged: (value) {
-              productModel.stock = int.tryParse(value) ?? 0;
-            },
             controller: stockController,
+            onChanged: (value) {
+              initProduct = initProduct.copyWith(stock: int.tryParse(value) ?? 0);
+              widget.onUpdate(initProduct);
+            },
             decoration: const InputDecoration(
               hintText: 'Stock',
             ),

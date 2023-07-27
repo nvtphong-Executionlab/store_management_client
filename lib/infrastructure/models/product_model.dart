@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'product_model.freezed.dart';
 part 'product_model.g.dart';
 
-@unfreezed
+@freezed
 class ProductModel with _$ProductModel {
   const ProductModel._();
   @JsonSerializable(fieldRename: FieldRename.pascal)

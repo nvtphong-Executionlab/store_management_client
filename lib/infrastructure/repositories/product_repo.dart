@@ -16,7 +16,11 @@ class ProductRepository {
     return _httpService.getData<PaginationResponse<ProductModel>>(ListProductParam(page: page));
   }
 
-  Future<Either<FailureModel, ProductModel?>> searchProduct(String keyword) async {
+  Future<Either<FailureModel, PaginationResponse<ProductModel>>> searchProduct(String keyword) {
+    return _httpService.getData<PaginationResponse<ProductModel>>(SearchProductParam(keyword));
+  }
+
+  Future<Either<FailureModel, ProductModel?>> searchSingleProduct(String keyword) async {
     final result = await _httpService.getData<PaginationResponse<ProductModel>>(SearchProductParam(keyword));
     return result.fold((l) => left(l), (r) => right(r.data.isEmpty ? null : r.data.first));
     // final r = Random();
@@ -27,17 +31,15 @@ class ProductRepository {
     // return right(ProductModel(productID: id, productName: name, priceOut: 100000, priceIn: 900000));
   }
 
-  Future<Either<FailureModel, ProductModel>> addProduct(
-      int id, String name, double priceIn, double priceOut, int stock) async {
-    return _httpService.postData<ProductModel>(
-        AddProductParam(id: id, stock: stock, priceIn: priceIn, priceOut: priceOut, name: name));
+  Future<Either<FailureModel, List<ProductModel>>> addProducts(List<ProductModel> products) async {
+    return _httpService.postData<List<ProductModel>>(AddProductParam(products: products));
   }
 }
 
 @riverpod
 FutureOr<ProductModel?> searchProduct(SearchProductRef ref, {required String keyword}) async {
   final productRepo = ref.watch(productRepoProvider);
-  final result = await productRepo.searchProduct(keyword);
+  final result = await productRepo.searchSingleProduct(keyword);
   return result.fold((l) => null, (r) => r);
 }
 

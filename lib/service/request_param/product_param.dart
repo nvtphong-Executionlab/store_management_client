@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:store_management_client/infrastructure/models/product_model.dart';
+
 import 'request_param.dart';
 
 class SearchProductParam extends IParam {
@@ -13,20 +15,11 @@ class SearchProductParam extends IParam {
 }
 
 class AddProductParam extends IParam {
-  final int id, stock;
-  final double priceIn, priceOut;
-  final String name;
-  AddProductParam({
-    required this.id,
-    required this.stock,
-    required this.priceIn,
-    required this.priceOut,
-    required this.name,
-  });
+  List<ProductModel> products;
+  AddProductParam({required this.products});
 
   @override
-  Map<String, dynamic> get json =>
-      {'ID': id, 'ProductName': name, 'PriceIn': priceIn, 'PriceOut': priceOut, 'Stock': stock};
+  get json => products.map((e) => e.toJson()).toList();
 
   @override
   String get link => 'products';

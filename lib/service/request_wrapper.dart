@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:store_management_client/infrastructure/models/failure_model.dart';
 import 'package:store_management_client/infrastructure/models/product_model.dart';
 import 'package:store_management_client/infrastructure/models/result_model.dart';
+import 'package:store_management_client/infrastructure/models/sale_model.dart';
 
 Future<Either<FailureModel, T>> requestWrapper<T>(Future<Response> call) async {
   try {
@@ -18,7 +19,7 @@ Future<Either<FailureModel, T>> requestWrapper<T>(Future<Response> call) async {
   }
 }
 
-T _mapJsonToData<T>(Map<String, dynamic> json) {
+T _mapJsonToData<T>(dynamic json) {
   dynamic result;
   switch (T) {
     case ProductModel:
@@ -26,8 +27,16 @@ T _mapJsonToData<T>(Map<String, dynamic> json) {
       break;
     case const (PaginationResponse<ProductModel>):
       result = PaginationResponse.fromJson(json, ProductModel.fromObjectJson);
+      break;
+    case const (List<ProductModel>):
+      result = (json as List).map((e) => ProductModel.fromJson(e)).toList();
+      break;
+    case const (PaginationResponse<SaleModel>):
+      result = PaginationResponse.fromJson(json, (p0) => SaleModel.fromObjectJson);
+    case SaleModel:
+      result = SaleModel.fromJson(json);
     default:
-      result = json;
+      result = json as T;
       break;
   }
   return result as T;

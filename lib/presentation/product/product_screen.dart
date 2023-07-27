@@ -98,6 +98,13 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                     Expanded(
                       child: TextField(
                         focusNode: searchFocusNode,
+                        onChanged: (value) {
+                          if (value.isEmpty) {
+                            ref.read(productNotifierProvider.notifier).getProducts();
+                          } else {
+                            ref.read(productNotifierProvider.notifier).searchProduct(keyword: value);
+                          }
+                        },
                         decoration: InputDecoration(
                             hintText: 'Search products',
                             prefixIcon: searchFocusNode.hasFocus

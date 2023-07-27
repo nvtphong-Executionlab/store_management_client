@@ -21,15 +21,10 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ProductModel {
   int get ID => throw _privateConstructorUsedError;
-  set ID(int value) => throw _privateConstructorUsedError;
   String get productName => throw _privateConstructorUsedError;
-  set productName(String value) => throw _privateConstructorUsedError;
   int get stock => throw _privateConstructorUsedError;
-  set stock(int value) => throw _privateConstructorUsedError;
   double get priceIn => throw _privateConstructorUsedError;
-  set priceIn(double value) => throw _privateConstructorUsedError;
   double get priceOut => throw _privateConstructorUsedError;
-  set priceOut(double value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -162,24 +157,43 @@ class _$_ProductModel extends _ProductModel {
 
   @override
   @JsonKey()
-  int ID;
+  final int ID;
   @override
   @JsonKey()
-  String productName;
+  final String productName;
   @override
   @JsonKey()
-  int stock;
+  final int stock;
   @override
   @JsonKey()
-  double priceIn;
+  final double priceIn;
   @override
   @JsonKey()
-  double priceOut;
+  final double priceOut;
 
   @override
   String toString() {
     return 'ProductModel(ID: $ID, productName: $productName, stock: $stock, priceIn: $priceIn, priceOut: $priceOut)';
   }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ProductModel &&
+            (identical(other.ID, ID) || other.ID == ID) &&
+            (identical(other.productName, productName) ||
+                other.productName == productName) &&
+            (identical(other.stock, stock) || other.stock == stock) &&
+            (identical(other.priceIn, priceIn) || other.priceIn == priceIn) &&
+            (identical(other.priceOut, priceOut) ||
+                other.priceOut == priceOut));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, ID, productName, stock, priceIn, priceOut);
 
   @JsonKey(ignore: true)
   @override
@@ -197,11 +211,11 @@ class _$_ProductModel extends _ProductModel {
 
 abstract class _ProductModel extends ProductModel {
   factory _ProductModel(
-      {int ID,
-      String productName,
-      int stock,
-      double priceIn,
-      double priceOut}) = _$_ProductModel;
+      {final int ID,
+      final String productName,
+      final int stock,
+      final double priceIn,
+      final double priceOut}) = _$_ProductModel;
   _ProductModel._() : super._();
 
   factory _ProductModel.fromJson(Map<String, dynamic> json) =
@@ -209,19 +223,14 @@ abstract class _ProductModel extends ProductModel {
 
   @override
   int get ID;
-  set ID(int value);
   @override
   String get productName;
-  set productName(String value);
   @override
   int get stock;
-  set stock(int value);
   @override
   double get priceIn;
-  set priceIn(double value);
   @override
   double get priceOut;
-  set priceOut(double value);
   @override
   @JsonKey(ignore: true)
   _$$_ProductModelCopyWith<_$_ProductModel> get copyWith =>
