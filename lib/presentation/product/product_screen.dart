@@ -37,7 +37,14 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
         floatingActionButton: ExpandableFab(key: fabkey, children: [
           FloatingActionButton.small(
             heroTag: 'edit',
-            onPressed: () {},
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => const CommonProductForm(
+                  productAction: ProductAction.edit,
+                ),
+              );
+            },
             child: const Icon(Icons.edit),
           ),
           FloatingActionButton.small(
@@ -54,7 +61,14 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
           ),
           FloatingActionButton.small(
             heroTag: 'remove',
-            onPressed: () {},
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => const CommonProductForm(
+                  productAction: ProductAction.delete,
+                ),
+              );
+            },
             child: const Icon(Icons.remove),
           ),
         ]),

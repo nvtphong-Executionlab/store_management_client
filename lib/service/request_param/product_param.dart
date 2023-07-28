@@ -14,9 +14,9 @@ class SearchProductParam extends IParam {
   String get link => 'products/search';
 }
 
-class AddProductParam extends IParam {
+class CUDProductParam extends IParam {
   List<ProductModel> products;
-  AddProductParam({required this.products});
+  CUDProductParam({required this.products});
 
   @override
   get json => products.map((e) => e.toJson()).toList();
@@ -27,11 +27,12 @@ class AddProductParam extends IParam {
 
 class ListProductParam extends IParam {
   final int page;
-  ListProductParam({this.page = 1});
+  final int limit;
+  ListProductParam({this.page = 1, this.limit = 20});
 
   @override
   Map<String, dynamic> get json => {};
 
   @override
-  String get link => 'products?page=$page';
+  String get link => 'products?page=$page&limit=$limit';
 }

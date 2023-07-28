@@ -66,8 +66,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             FilledButton(
               onPressed: () async {
                 if (isLogin) {
-                  await ref.read(authRepoProvider).login();
-                  context.router.replace(const NoStoreRoute());
+                  final res = await ref.read(authRepoProvider).login();
+                  res.fold((l) => null, (r) {
+                    context.router.replace(const NoStoreRoute());
+                  });
                 }
               },
               child: Text(isLogin ? 'Login' : 'Register'),

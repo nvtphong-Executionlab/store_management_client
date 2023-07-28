@@ -39,4 +39,38 @@ class ProductNotifier extends _$ProductNotifier {
           currentData.copyWith(totalItems: currentData.totalItems + r.length, data: [...currentData.data, ...r]));
     });
   }
+
+  Future updateProducts(List<ProductModel> products) async {
+    final result = await _productRepo.updateProducts(products);
+    result.fold((l) {
+      // TODO: handle error here
+    }, (r) {
+      final currentState = state.value ?? _emptyResponse;
+      final currentData = [...currentState.data];
+      for (int i = 0; i < currentData.length; ++i) {
+        final index = products.indexWhere((element) => element.ID == currentData[i].ID);
+        if (index > -1) {
+          currentData[i] = products[index];
+        }
+      }
+      state = AsyncData(currentState.copyWith(data: currentData));
+    });
+  }
+
+  Future removeProducts(List<ProductModel> products) async {
+    final result = await _productRepo.removeProducts(products);
+    result.fold((l) {
+      // TODO: handle error here
+    }, (r) {
+      final currentState = state.value ?? _emptyResponse;
+      final currentData = [...currentState.data];
+      for (int i = 0; i < currentData.length; ++i) {
+        final index = products.indexWhere((element) => element.ID == currentData[i].ID);
+        if (index > -1) {
+          currentData.removeAt(i);
+        }
+      }
+      state = AsyncData(currentState.copyWith(data: currentData, totalItems: currentState.totalItems - 1));
+    });
+  }
 }

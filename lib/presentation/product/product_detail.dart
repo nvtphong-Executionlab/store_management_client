@@ -22,26 +22,27 @@ class CommonProductForm extends StatefulHookConsumerWidget {
 class _CommonProductFormState extends ConsumerState<CommonProductForm> {
   @override
   Widget build(BuildContext context) {
-    final numForm = useState(1);
-    final memoProducts = useMemoized(() => <ProductModel>[ProductModel()]);
+    final memoProducts = useMemoized(() => <ProductModel>[]);
 
     void addForm() {
-      memoProducts.add(ProductModel());
-
-      numForm.value += 1;
+      setState(() {
+        memoProducts.add(ProductModel());
+      });
     }
 
     void removeForm() {
-      memoProducts.removeLast();
-      numForm.value -= 1;
+      setState(() {
+        memoProducts.removeLast();
+      });
     }
 
     void reset() {
-      memoProducts.clear();
-      numForm.value = 0;
-      Future(() {
-        memoProducts.add(ProductModel());
-        numForm.value = 1;
+      setState(() {
+        memoProducts.clear();
+
+        Future(() {
+          memoProducts.add(ProductModel());
+        });
       });
     }
 
@@ -70,7 +71,7 @@ class _CommonProductFormState extends ConsumerState<CommonProductForm> {
                 Row(
                   children: [
                     Visibility(
-                      visible: numForm.value > 1,
+                      visible: memoProducts.length > 1,
                       child: IconButton(
                           onPressed: removeForm,
                           icon: const Icon(
@@ -109,7 +110,7 @@ class _CommonProductFormState extends ConsumerState<CommonProductForm> {
                   },
                 );
               },
-              itemCount: numForm.value,
+              itemCount: memoProducts.length,
             )),
             const Divider(),
             const SizedBox(
@@ -130,13 +131,21 @@ class _CommonProductFormState extends ConsumerState<CommonProductForm> {
                       ref.read(productNotifierProvider.notifier).addProducts(memoProducts);
                       context.router.root.pop();
                       break;
+                    case ProductAction.edit:
+                      ref.read(productNotifierProvider.notifier).updateProducts(memoProducts);
+                      context.router.root.pop();
+                      break;
+                    case ProductAction.delete:
+                      ref.read(productNotifierProvider.notifier).removeProducts(memoProducts);
+                      context.router.root.pop();
+                      break;
                     case ProductAction.sell:
                       ref.read(saleNotifierProvider.notifier).sellProducts(memoProducts);
                       break;
                     default:
                       break;
                   }
-                  reset();
+                  // reset();
                 },
                 child: Text(widget.productAction.name.toUpperCase())),
             const SizedBox(
@@ -165,7 +174,7 @@ class _ProductFormState extends ConsumerState<ProductForm> {
   void updateProductInfo(String productID) {
     ref.read(searchProductProvider(keyword: productID).future).then((value) {
       // setState(() {
-      initProduct = value ?? ProductModel();
+      initProduct = value ?? ProductModel(ID: int.tryParse(productID) ?? 0);
       widget.onUpdate(initProduct);
       // });
     });
@@ -222,6 +231,10 @@ class _ProductFormState extends ConsumerState<ProductForm> {
           ),
           TextField(
             controller: nameController,
+            onChanged: (value) {
+              initProduct = initProduct.copyWith(productName: value);
+              widget.onUpdate(initProduct);
+            },
             decoration: const InputDecoration(
               hintText: 'Product Name',
             ),

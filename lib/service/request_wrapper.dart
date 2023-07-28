@@ -35,6 +35,8 @@ T _mapJsonToData<T>(dynamic json) {
       result = PaginationResponse.fromJson(json, (p0) => SaleModel.fromObjectJson);
     case SaleModel:
       result = SaleModel.fromJson(json);
+    case Unit:
+      result = unit;
     default:
       result = json as T;
       break;

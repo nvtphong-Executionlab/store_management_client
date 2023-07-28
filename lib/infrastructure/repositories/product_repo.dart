@@ -23,16 +23,18 @@ class ProductRepository {
   Future<Either<FailureModel, ProductModel?>> searchSingleProduct(String keyword) async {
     final result = await _httpService.getData<PaginationResponse<ProductModel>>(SearchProductParam(keyword));
     return result.fold((l) => left(l), (r) => right(r.data.isEmpty ? null : r.data.first));
-    // final r = Random();
-    // await Future.delayed(const Duration(milliseconds: 500));
-    // final id = String.fromCharCodes(List.generate(10, (index) => r.nextInt(33) + 89));
-    // final name = String.fromCharCodes(List.generate(20, (index) => r.nextInt(33) + 89));
-
-    // return right(ProductModel(productID: id, productName: name, priceOut: 100000, priceIn: 900000));
   }
 
   Future<Either<FailureModel, List<ProductModel>>> addProducts(List<ProductModel> products) async {
-    return _httpService.postData<List<ProductModel>>(AddProductParam(products: products));
+    return _httpService.postData<List<ProductModel>>(CUDProductParam(products: products));
+  }
+
+  Future<Either<FailureModel, Unit>> removeProducts(List<ProductModel> products) async {
+    return _httpService.deleteData(CUDProductParam(products: products));
+  }
+
+  Future<Either<FailureModel, Unit>> updateProducts(List<ProductModel> products) async {
+    return _httpService.putData(CUDProductParam(products: products));
   }
 }
 
