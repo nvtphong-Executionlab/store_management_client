@@ -4,4 +4,5 @@ enum ProductAction {
   delete,
   sell,
   buy,
+  history,
 }

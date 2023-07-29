@@ -6,14 +6,15 @@ import 'package:store_management_client/infrastructure/repositories/sale_repo.da
 import '../infrastructure/models/product_model.dart';
 part 'sale_notifier.g.dart';
 
-const _empty = PaginationResponse<SaleModel>(currentPage: 1, totalItems: 0, totalPages: 1, data: []);
+const _empty = PaginationResponse<SaleModel>(currentPage: 0, totalItems: 0, totalPages: 1, data: []);
 
 @riverpod
 class SaleNotifier extends _$SaleNotifier {
   late final SaleRepository _saleRepo;
   @override
-  FutureOr<PaginationResponse<SaleModel>> build() async {
+  FutureOr<PaginationResponse<SaleModel>> build() {
     _saleRepo = ref.watch(saleRepoProvider);
+    getSales();
     // final sales = await _saleRepo.getSales();
     return _empty;
   }
@@ -25,5 +26,12 @@ class SaleNotifier extends _$SaleNotifier {
       ...currentData.data,
       ...res.fold((l) => [], (r) => [r])
     ]));
+  }
+
+  Future getSales() async {
+    final result = await _saleRepo.getSales(page: (state.value?.currentPage ?? 0) + 1);
+    state = AsyncData(result.fold((l) => _empty, (r) {
+      return r.copyWith(data: [...(state.value?.data ?? []), ...r.data]);
+    }));
   }
 }

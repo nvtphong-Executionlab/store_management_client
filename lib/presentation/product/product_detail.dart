@@ -40,9 +40,9 @@ class _CommonProductFormState extends ConsumerState<CommonProductForm> {
       setState(() {
         memoProducts.clear();
 
-        Future(() {
-          memoProducts.add(ProductModel());
-        });
+        // Future(() {
+        //   memoProducts.add(ProductModel());
+        // });
       });
     }
 
@@ -137,10 +137,10 @@ class _CommonProductFormState extends ConsumerState<CommonProductForm> {
                       break;
                     case ProductAction.delete:
                       ref.read(productNotifierProvider.notifier).removeProducts(memoProducts);
-                      context.router.root.pop();
                       break;
                     case ProductAction.sell:
-                      ref.read(saleNotifierProvider.notifier).sellProducts(memoProducts);
+                      await ref.read(saleNotifierProvider.notifier).sellProducts(memoProducts);
+                      reset();
                       break;
                     default:
                       break;

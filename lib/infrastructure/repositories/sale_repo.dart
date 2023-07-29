@@ -18,7 +18,7 @@ class SaleRepository {
   }
 
   Future<Either<FailureModel, PaginationResponse<SaleModel>>> getSales({int page = 1, int limit = 10}) async {
-    return _httpService.getData(GetSaleParam());
+    return _httpService.getData<PaginationResponse<SaleModel>>(GetSaleParam(page, limit));
   }
 }
 

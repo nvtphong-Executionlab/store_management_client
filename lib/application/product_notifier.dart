@@ -12,7 +12,7 @@ class ProductNotifier extends _$ProductNotifier {
   late final ProductRepository _productRepo;
 
   @override
-  PaginationResponse<ProductModel> build() {
+  FutureOr<PaginationResponse<ProductModel>> build() {
     _productRepo = ref.watch(productRepoProvider);
     getProducts();
     return _emptyResponse;

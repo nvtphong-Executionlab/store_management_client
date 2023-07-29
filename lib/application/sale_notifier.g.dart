@@ -6,7 +6,7 @@ part of 'sale_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$saleNotifierHash() => r'5772df63e2281a51ec2c05adeb0645e165ebcd58';
+String _$saleNotifierHash() => r'362341180930d5af98e068282f968018559aae14';
 
 /// See also [SaleNotifier].
 @ProviderFor(SaleNotifier)

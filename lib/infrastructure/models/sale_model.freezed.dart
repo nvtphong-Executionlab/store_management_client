@@ -22,6 +22,7 @@ SaleModel _$SaleModelFromJson(Map<String, dynamic> json) {
 mixin _$SaleModel {
   int get ID => throw _privateConstructorUsedError;
   double get totalPrice => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,7 @@ abstract class $SaleModelCopyWith<$Res> {
   factory $SaleModelCopyWith(SaleModel value, $Res Function(SaleModel) then) =
       _$SaleModelCopyWithImpl<$Res, SaleModel>;
   @useResult
-  $Res call({int ID, double totalPrice});
+  $Res call({int ID, double totalPrice, DateTime? createdAt});
 }
 
 /// @nodoc
@@ -52,6 +53,7 @@ class _$SaleModelCopyWithImpl<$Res, $Val extends SaleModel>
   $Res call({
     Object? ID = null,
     Object? totalPrice = null,
+    Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
       ID: null == ID
@@ -62,6 +64,10 @@ class _$SaleModelCopyWithImpl<$Res, $Val extends SaleModel>
           ? _value.totalPrice
           : totalPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -73,7 +79,7 @@ abstract class _$$_SaleModelCopyWith<$Res> implements $SaleModelCopyWith<$Res> {
       __$$_SaleModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int ID, double totalPrice});
+  $Res call({int ID, double totalPrice, DateTime? createdAt});
 }
 
 /// @nodoc
@@ -89,6 +95,7 @@ class __$$_SaleModelCopyWithImpl<$Res>
   $Res call({
     Object? ID = null,
     Object? totalPrice = null,
+    Object? createdAt = freezed,
   }) {
     return _then(_$_SaleModel(
       ID: null == ID
@@ -99,6 +106,10 @@ class __$$_SaleModelCopyWithImpl<$Res>
           ? _value.totalPrice
           : totalPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -107,7 +118,9 @@ class __$$_SaleModelCopyWithImpl<$Res>
 
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class _$_SaleModel extends _SaleModel {
-  const _$_SaleModel({required this.ID, required this.totalPrice}) : super._();
+  const _$_SaleModel(
+      {required this.ID, required this.totalPrice, this.createdAt})
+      : super._();
 
   factory _$_SaleModel.fromJson(Map<String, dynamic> json) =>
       _$$_SaleModelFromJson(json);
@@ -116,10 +129,12 @@ class _$_SaleModel extends _SaleModel {
   final int ID;
   @override
   final double totalPrice;
+  @override
+  final DateTime? createdAt;
 
   @override
   String toString() {
-    return 'SaleModel(ID: $ID, totalPrice: $totalPrice)';
+    return 'SaleModel(ID: $ID, totalPrice: $totalPrice, createdAt: $createdAt)';
   }
 
   @override
@@ -129,12 +144,14 @@ class _$_SaleModel extends _SaleModel {
             other is _$_SaleModel &&
             (identical(other.ID, ID) || other.ID == ID) &&
             (identical(other.totalPrice, totalPrice) ||
-                other.totalPrice == totalPrice));
+                other.totalPrice == totalPrice) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, ID, totalPrice);
+  int get hashCode => Object.hash(runtimeType, ID, totalPrice, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -152,7 +169,9 @@ class _$_SaleModel extends _SaleModel {
 
 abstract class _SaleModel extends SaleModel {
   const factory _SaleModel(
-      {required final int ID, required final double totalPrice}) = _$_SaleModel;
+      {required final int ID,
+      required final double totalPrice,
+      final DateTime? createdAt}) = _$_SaleModel;
   const _SaleModel._() : super._();
 
   factory _SaleModel.fromJson(Map<String, dynamic> json) =
@@ -162,6 +181,8 @@ abstract class _SaleModel extends SaleModel {
   int get ID;
   @override
   double get totalPrice;
+  @override
+  DateTime? get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$_SaleModelCopyWith<_$_SaleModel> get copyWith =>
