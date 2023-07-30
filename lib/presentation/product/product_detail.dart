@@ -2,12 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:store_management_client/application/product_notifier.dart';
-import 'package:store_management_client/infrastructure/models/product_model.dart';
+import 'package:store_management_client/application/product/product_notifier.dart';
+import 'package:store_management_client/infrastructure/models/product/product_model.dart';
 import 'package:store_management_client/infrastructure/repositories/product_repo.dart';
 
-import '../../application/product_action.dart';
-import '../../application/sale_notifier.dart';
+import '../../application/product/product_action.dart';
+import '../../application/sale/sale_notifier.dart';
 import '../../utils/colors/colors.dart';
 import '../../utils/constants/padding.dart';
 import '../../utils/styles/text_styles.dart';
@@ -16,7 +16,8 @@ class CommonProductForm extends StatefulHookConsumerWidget {
   const CommonProductForm({super.key, required this.productAction});
   final ProductAction productAction;
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _CommonProductFormState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _CommonProductFormState();
 }
 
 class _CommonProductFormState extends ConsumerState<CommonProductForm> {
@@ -128,18 +129,26 @@ class _CommonProductFormState extends ConsumerState<CommonProductForm> {
                 onPressed: () async {
                   switch (widget.productAction) {
                     case ProductAction.add:
-                      ref.read(productNotifierProvider.notifier).addProducts(memoProducts);
+                      ref
+                          .read(productNotifierProvider.notifier)
+                          .addProducts(memoProducts);
                       context.router.root.pop();
                       break;
                     case ProductAction.edit:
-                      ref.read(productNotifierProvider.notifier).updateProducts(memoProducts);
+                      ref
+                          .read(productNotifierProvider.notifier)
+                          .updateProducts(memoProducts);
                       context.router.root.pop();
                       break;
                     case ProductAction.delete:
-                      ref.read(productNotifierProvider.notifier).removeProducts(memoProducts);
+                      ref
+                          .read(productNotifierProvider.notifier)
+                          .removeProducts(memoProducts);
                       break;
                     case ProductAction.sell:
-                      await ref.read(saleNotifierProvider.notifier).sellProducts(memoProducts);
+                      await ref
+                          .read(saleNotifierProvider.notifier)
+                          .sellProducts(memoProducts);
                       reset();
                       break;
                     default:
@@ -183,18 +192,22 @@ class _ProductFormState extends ConsumerState<ProductForm> {
   @override
   Widget build(BuildContext context) {
     return HookBuilder(builder: (_) {
-      final TextEditingController idController = useTextEditingController(text: initProduct.ID.toString());
+      final TextEditingController idController =
+          useTextEditingController(text: initProduct.ID.toString());
 
-      final nameController = useTextEditingController(text: initProduct.productName, keys: [idController.text]);
-      final priceInController =
-          useTextEditingController(text: initProduct.priceIn.toString(), keys: [idController.text]);
-      final priceOutController =
-          useTextEditingController(text: initProduct.priceOut.toString(), keys: [idController.text]);
-      final stockController = useTextEditingController(text: initProduct.stock.toString(), keys: [idController.text]);
+      final nameController = useTextEditingController(
+          text: initProduct.productName, keys: [idController.text]);
+      final priceInController = useTextEditingController(
+          text: initProduct.priceIn.toString(), keys: [idController.text]);
+      final priceOutController = useTextEditingController(
+          text: initProduct.priceOut.toString(), keys: [idController.text]);
+      final stockController = useTextEditingController(
+          text: initProduct.stock.toString(), keys: [idController.text]);
 
       return GestureDetector(
         onTap: FocusManager.instance.primaryFocus?.unfocus,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        child:
+            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Stack(
             children: [
               TextField(
@@ -248,7 +261,8 @@ class _ProductFormState extends ConsumerState<ProductForm> {
               decoration: const InputDecoration(
                 hintText: 'Price In',
               ),
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
             ),
           if (widget.action != ProductAction.sell)
             const SizedBox(
@@ -260,7 +274,8 @@ class _ProductFormState extends ConsumerState<ProductForm> {
               hintText: 'Price Out',
             ),
             onChanged: (value) {
-              initProduct = initProduct.copyWith(priceOut: double.tryParse(value) ?? 0);
+              initProduct =
+                  initProduct.copyWith(priceOut: double.tryParse(value) ?? 0);
               widget.onUpdate(initProduct);
             },
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -271,7 +286,8 @@ class _ProductFormState extends ConsumerState<ProductForm> {
           TextField(
             controller: stockController,
             onChanged: (value) {
-              initProduct = initProduct.copyWith(stock: int.tryParse(value) ?? 0);
+              initProduct =
+                  initProduct.copyWith(stock: int.tryParse(value) ?? 0);
               widget.onUpdate(initProduct);
             },
             decoration: const InputDecoration(

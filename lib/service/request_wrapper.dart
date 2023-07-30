@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:store_management_client/infrastructure/models/failure_model.dart';
-import 'package:store_management_client/infrastructure/models/product_model.dart';
-import 'package:store_management_client/infrastructure/models/result_model.dart';
-import 'package:store_management_client/infrastructure/models/sale_item_model.dart';
-import 'package:store_management_client/infrastructure/models/sale_model.dart';
+import 'package:store_management_client/infrastructure/models/response/failure_model.dart';
+import 'package:store_management_client/infrastructure/models/product/product_model.dart';
+import 'package:store_management_client/infrastructure/models/response/result_model.dart';
+import 'package:store_management_client/infrastructure/models/sale/sale_item_model.dart';
+import 'package:store_management_client/infrastructure/models/sale/sale_model.dart';
 
 Future<Either<FailureModel, T>> requestWrapper<T>(Future<Response> call) async {
   try {
@@ -16,7 +16,9 @@ Future<Either<FailureModel, T>> requestWrapper<T>(Future<Response> call) async {
     return right(_mapJsonToData<T>(jsonData));
   } on DioException catch (err) {
     log('error ${err.response?.data}');
-    return left(FailureModel(code: err.response?.statusCode.toString(), message: err.response?.data.toString()));
+    return left(FailureModel(
+        code: err.response?.statusCode.toString(),
+        message: err.response?.data.toString()));
   }
 }
 

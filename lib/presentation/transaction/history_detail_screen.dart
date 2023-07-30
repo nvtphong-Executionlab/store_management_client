@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:store_management_client/infrastructure/models/sale_item_model.dart';
+import 'package:store_management_client/infrastructure/models/sale/sale_item_model.dart';
 import 'package:store_management_client/service/http_service.dart';
 
 import '../../service/request_param/sale_param.dart';
@@ -67,11 +67,13 @@ class HistoryDetailScreen extends ConsumerWidget {
                       children: [
                         const Text(
                           'Total price',
-                          style: TextStyle(color: Colors.green, fontWeight: FontWeight.w700),
+                          style: TextStyle(
+                              color: Colors.green, fontWeight: FontWeight.w700),
                         ),
                         Text(
                           '${data.totalPrice}',
-                          style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                              color: Colors.green, fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
