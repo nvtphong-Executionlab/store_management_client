@@ -1,4 +1,4 @@
-import 'package:store_management_client/infrastructure/models/product_model.dart';
+import 'package:store_management_client/infrastructure/models/product/product_model.dart';
 import 'package:store_management_client/service/request_param/request_param.dart';
 
 class GetSaleParam extends IParam {

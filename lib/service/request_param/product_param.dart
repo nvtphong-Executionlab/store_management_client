@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:store_management_client/infrastructure/models/product_model.dart';
+import 'package:store_management_client/infrastructure/models/product/product_model.dart';
 
 import 'request_param.dart';
 

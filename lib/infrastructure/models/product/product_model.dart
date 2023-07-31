@@ -14,6 +14,8 @@ class ProductModel with _$ProductModel {
     @Default(0.0) double priceIn,
     @Default(0.0) double priceOut,
   }) = _ProductModel;
-  factory ProductModel.fromJson(Map<String, dynamic> json) => _$ProductModelFromJson(json);
-  factory ProductModel.fromObjectJson(Object? json) => ProductModel.fromJson(json as Map<String, dynamic>);
+  factory ProductModel.fromJson(Map<String, dynamic> json) =>
+      _$ProductModelFromJson(json);
+  factory ProductModel.fromObjectJson(Object? json) =>
+      ProductModel.fromJson(json as Map<String, dynamic>);
 }

@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'product_model.dart';
-
 part 'sale_model.freezed.dart';
 part 'sale_model.g.dart';
 
@@ -15,6 +13,8 @@ class SaleModel with _$SaleModel {
     DateTime? createdAt,
   }) = _SaleModel;
 
-  factory SaleModel.fromJson(Map<String, dynamic> json) => _$SaleModelFromJson(json);
-  factory SaleModel.fromObjectJson(Object? json) => SaleModel.fromJson(json as Map<String, dynamic>);
+  factory SaleModel.fromJson(Map<String, dynamic> json) =>
+      _$SaleModelFromJson(json);
+  factory SaleModel.fromObjectJson(Object? json) =>
+      SaleModel.fromJson(json as Map<String, dynamic>);
 }

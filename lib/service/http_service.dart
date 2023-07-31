@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:store_management_client/infrastructure/models/failure_model.dart';
+import 'package:store_management_client/infrastructure/models/response/failure_model.dart';
 import 'package:store_management_client/service/authen_interceptor.dart';
 import 'package:store_management_client/service/request_param/request_param.dart';
 import 'package:store_management_client/service/request_wrapper.dart';
@@ -36,7 +36,7 @@ class HttpService {
 @riverpod
 Dio dio(DioRef ref) {
   return Dio(BaseOptions(
-    baseUrl: 'http://localhost:8080/api/v1/',
+    baseUrl: 'http://192.168.0.102:8080/api/v1/',
     connectTimeout: const Duration(milliseconds: 30000),
     receiveTimeout: const Duration(milliseconds: 30000),
     followRedirects: false,

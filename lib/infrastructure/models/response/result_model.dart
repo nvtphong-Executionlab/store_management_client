@@ -13,6 +13,7 @@ class PaginationResponse<T> with _$PaginationResponse<T> {
     required int totalPages,
   }) = _PaginationResponse<T>;
 
-  factory PaginationResponse.fromJson(Map<String, dynamic> json, T Function(Object?) fromJsonT) =>
+  factory PaginationResponse.fromJson(
+          Map<String, dynamic> json, T Function(Object?) fromJsonT) =>
       _$PaginationResponseFromJson(json, fromJsonT);
 }

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:store_management_client/infrastructure/models/failure_model.dart';
+import 'package:store_management_client/infrastructure/models/response/failure_model.dart';
 import 'package:store_management_client/service/http_service.dart';
 
 import '../../service/request_param/auth_param.dart';
@@ -12,7 +12,8 @@ class AuthRepository {
   AuthRepository(this._httpService);
 
   Future<Either<FailureModel, Unit>> login() async {
-    final result = await _httpService.postData<Map<String, dynamic>>(LoginParam('phongdz', '123456'));
+    final result = await _httpService
+        .postData<Map<String, dynamic>>(LoginParam('phongdz', '123456'));
     final pref = await SharedPreferences.getInstance();
     return result.fold((l) => left(l), (r) {
       pref.setString('access_token', r['access_token']);

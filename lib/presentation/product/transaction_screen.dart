@@ -4,7 +4,7 @@ import 'package:store_management_client/presentation/product/product_detail.dart
 import 'package:store_management_client/presentation/transaction/history_screen.dart';
 import 'package:store_management_client/utils/colors/colors.dart';
 
-import '../../application/product_action.dart';
+import '../../application/product/product_action.dart';
 
 // final _tabs = List.generate(2, (index) {
 //   return switch (index) {
@@ -17,7 +17,11 @@ import '../../application/product_action.dart';
 @RoutePage()
 class TransactionScreen extends StatelessWidget {
   const TransactionScreen({super.key});
-  static const _tabs = [ProductAction.sell, ProductAction.buy, ProductAction.history];
+  static const _tabs = [
+    ProductAction.sell,
+    ProductAction.buy,
+    ProductAction.history
+  ];
   static const _tabViews = [
     CommonProductForm(
       productAction: ProductAction.sell,
