@@ -15,3 +15,24 @@ class LoginParam extends IParam {
   @override
   String get link => 'login';
 }
+
+class SignUpParam extends LoginParam {
+  SignUpParam(super.username, super.password);
+
+  @override
+  Map<String, dynamic> get json => {
+        'username': username,
+        'password': password,
+      };
+
+  @override
+  String get link => 'signup';
+}
+
+class UserInfoParam extends IParam {
+  @override
+  Map<String, dynamic> get json => {};
+
+  @override
+  String get link => 'user';
+}

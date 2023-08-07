@@ -11,226 +11,100 @@
 import 'package:auto_route/auto_route.dart' as _i11;
 import 'package:flutter/material.dart' as _i12;
 import 'package:store_management_client/presentation/authentication/create_store_screen.dart'
-    as _i7;
-import 'package:store_management_client/presentation/authentication/join_store_screen.dart'
-    as _i6;
-import 'package:store_management_client/presentation/authentication/login_screen.dart'
-    as _i5;
-import 'package:store_management_client/presentation/authentication/no_store_screen.dart'
-    as _i9;
-import 'package:store_management_client/presentation/authentication/waiting_approve_screen.dart'
     as _i8;
-import 'package:store_management_client/presentation/home/home_screen.dart'
-    as _i2;
-import 'package:store_management_client/presentation/home/statistic_screen.dart'
-    as _i1;
-import 'package:store_management_client/presentation/product/product_screen.dart'
-    as _i3;
-import 'package:store_management_client/presentation/product/transaction_screen.dart'
-    as _i4;
-import 'package:store_management_client/presentation/transaction/history_detail_screen.dart'
+import 'package:store_management_client/presentation/authentication/join_store_screen.dart'
+    as _i7;
+import 'package:store_management_client/presentation/authentication/login_screen.dart'
+    as _i6;
+import 'package:store_management_client/presentation/authentication/no_store_screen.dart'
     as _i10;
+import 'package:store_management_client/presentation/authentication/waiting_approve_screen.dart'
+    as _i9;
+import 'package:store_management_client/presentation/home/home_screen.dart'
+    as _i3;
+import 'package:store_management_client/presentation/home/statistic_screen.dart'
+    as _i2;
+import 'package:store_management_client/presentation/product/product_screen.dart'
+    as _i4;
+import 'package:store_management_client/presentation/product/transaction_screen.dart'
+    as _i5;
+import 'package:store_management_client/presentation/transaction/history_detail_screen.dart'
+    as _i1;
 
 abstract class $AppRouter extends _i11.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
   final Map<String, _i11.PageFactory> pagesMap = {
+    HistoryDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<HistoryDetailRouteArgs>();
+      return _i11.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i1.HistoryDetailScreen(
+          key: args.key,
+          saleID: args.saleID,
+        ),
+      );
+    },
     StatisticRoute.name: (routeData) {
       return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i1.StatisticScreen(),
+        child: const _i2.StatisticScreen(),
       );
     },
     HomeRoute.name: (routeData) {
       return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i2.HomeScreen(),
+        child: const _i3.HomeScreen(),
       );
     },
     ProductRoute.name: (routeData) {
       return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i3.ProductScreen(),
+        child: const _i4.ProductScreen(),
       );
     },
     TransactionRoute.name: (routeData) {
       return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i4.TransactionScreen(),
+        child: const _i5.TransactionScreen(),
       );
     },
     LoginRoute.name: (routeData) {
       return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.LoginScreen(),
+        child: const _i6.LoginScreen(),
       );
     },
     JoinStoreRoute.name: (routeData) {
       return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i6.JoinStoreScreen(),
+        child: const _i7.JoinStoreScreen(),
       );
     },
     CreateStoreRoute.name: (routeData) {
       return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i7.CreateStoreScreen(),
+        child: const _i8.CreateStoreScreen(),
       );
     },
     WaitingApproveRoute.name: (routeData) {
       return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i8.WaitingApproveScreen(),
+        child: const _i9.WaitingApproveScreen(),
       );
     },
     NoStoreRoute.name: (routeData) {
       return _i11.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i9.NoStoreScreen(),
-      );
-    },
-    HistoryDetailRoute.name: (routeData) {
-      final args = routeData.argsAs<HistoryDetailRouteArgs>();
-      return _i11.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i10.HistoryDetailScreen(
-          key: args.key,
-          saleID: args.saleID,
-        ),
+        child: const _i10.NoStoreScreen(),
       );
     },
   };
 }
 
 /// generated route for
-/// [_i1.StatisticScreen]
-class StatisticRoute extends _i11.PageRouteInfo<void> {
-  const StatisticRoute({List<_i11.PageRouteInfo>? children})
-      : super(
-          StatisticRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'StatisticRoute';
-
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i2.HomeScreen]
-class HomeRoute extends _i11.PageRouteInfo<void> {
-  const HomeRoute({List<_i11.PageRouteInfo>? children})
-      : super(
-          HomeRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'HomeRoute';
-
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i3.ProductScreen]
-class ProductRoute extends _i11.PageRouteInfo<void> {
-  const ProductRoute({List<_i11.PageRouteInfo>? children})
-      : super(
-          ProductRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'ProductRoute';
-
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i4.TransactionScreen]
-class TransactionRoute extends _i11.PageRouteInfo<void> {
-  const TransactionRoute({List<_i11.PageRouteInfo>? children})
-      : super(
-          TransactionRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'TransactionRoute';
-
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i5.LoginScreen]
-class LoginRoute extends _i11.PageRouteInfo<void> {
-  const LoginRoute({List<_i11.PageRouteInfo>? children})
-      : super(
-          LoginRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'LoginRoute';
-
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i6.JoinStoreScreen]
-class JoinStoreRoute extends _i11.PageRouteInfo<void> {
-  const JoinStoreRoute({List<_i11.PageRouteInfo>? children})
-      : super(
-          JoinStoreRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'JoinStoreRoute';
-
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i7.CreateStoreScreen]
-class CreateStoreRoute extends _i11.PageRouteInfo<void> {
-  const CreateStoreRoute({List<_i11.PageRouteInfo>? children})
-      : super(
-          CreateStoreRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'CreateStoreRoute';
-
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i8.WaitingApproveScreen]
-class WaitingApproveRoute extends _i11.PageRouteInfo<void> {
-  const WaitingApproveRoute({List<_i11.PageRouteInfo>? children})
-      : super(
-          WaitingApproveRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'WaitingApproveRoute';
-
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i9.NoStoreScreen]
-class NoStoreRoute extends _i11.PageRouteInfo<void> {
-  const NoStoreRoute({List<_i11.PageRouteInfo>? children})
-      : super(
-          NoStoreRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'NoStoreRoute';
-
-  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i10.HistoryDetailScreen]
+/// [_i1.HistoryDetailScreen]
 class HistoryDetailRoute extends _i11.PageRouteInfo<HistoryDetailRouteArgs> {
   HistoryDetailRoute({
     _i12.Key? key,
@@ -265,4 +139,130 @@ class HistoryDetailRouteArgs {
   String toString() {
     return 'HistoryDetailRouteArgs{key: $key, saleID: $saleID}';
   }
+}
+
+/// generated route for
+/// [_i2.StatisticScreen]
+class StatisticRoute extends _i11.PageRouteInfo<void> {
+  const StatisticRoute({List<_i11.PageRouteInfo>? children})
+      : super(
+          StatisticRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'StatisticRoute';
+
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i3.HomeScreen]
+class HomeRoute extends _i11.PageRouteInfo<void> {
+  const HomeRoute({List<_i11.PageRouteInfo>? children})
+      : super(
+          HomeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HomeRoute';
+
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i4.ProductScreen]
+class ProductRoute extends _i11.PageRouteInfo<void> {
+  const ProductRoute({List<_i11.PageRouteInfo>? children})
+      : super(
+          ProductRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProductRoute';
+
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i5.TransactionScreen]
+class TransactionRoute extends _i11.PageRouteInfo<void> {
+  const TransactionRoute({List<_i11.PageRouteInfo>? children})
+      : super(
+          TransactionRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TransactionRoute';
+
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i6.LoginScreen]
+class LoginRoute extends _i11.PageRouteInfo<void> {
+  const LoginRoute({List<_i11.PageRouteInfo>? children})
+      : super(
+          LoginRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LoginRoute';
+
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i7.JoinStoreScreen]
+class JoinStoreRoute extends _i11.PageRouteInfo<void> {
+  const JoinStoreRoute({List<_i11.PageRouteInfo>? children})
+      : super(
+          JoinStoreRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'JoinStoreRoute';
+
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i8.CreateStoreScreen]
+class CreateStoreRoute extends _i11.PageRouteInfo<void> {
+  const CreateStoreRoute({List<_i11.PageRouteInfo>? children})
+      : super(
+          CreateStoreRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CreateStoreRoute';
+
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i9.WaitingApproveScreen]
+class WaitingApproveRoute extends _i11.PageRouteInfo<void> {
+  const WaitingApproveRoute({List<_i11.PageRouteInfo>? children})
+      : super(
+          WaitingApproveRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'WaitingApproveRoute';
+
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i10.NoStoreScreen]
+class NoStoreRoute extends _i11.PageRouteInfo<void> {
+  const NoStoreRoute({List<_i11.PageRouteInfo>? children})
+      : super(
+          NoStoreRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'NoStoreRoute';
+
+  static const _i11.PageInfo<void> page = _i11.PageInfo<void>(name);
 }

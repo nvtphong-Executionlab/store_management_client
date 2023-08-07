@@ -1,24 +1,24 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:store_management_client/infrastructure/repositories/auth_repo.dart';
-import 'package:store_management_client/routing/app_router.gr.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:store_management_client/application/auth/auth_notifier.dart';
 
 import '../../utils/constants/padding.dart';
 
 @RoutePage()
-class LoginScreen extends ConsumerStatefulWidget {
+class LoginScreen extends HookConsumerWidget {
   const LoginScreen({super.key});
 
   @override
-  ConsumerState<LoginScreen> createState() => _LoginScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isLoginNotifier = useState(true);
+    final isLogin = isLoginNotifier.value;
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
-  bool isLogin = true;
+    final txtUsername = useTextEditingController();
+    final txtPassword = useTextEditingController();
+    final txtConfirmPassword = useTextEditingController();
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: PaddingConstants.paddingLayout,
@@ -36,17 +36,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             const SizedBox(
               height: 30,
             ),
-            const TextField(
-              decoration: InputDecoration(
-                hintText: 'Email ID',
+            TextField(
+              controller: txtUsername,
+              decoration: const InputDecoration(
+                hintText: 'Username',
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            const TextField(
+            TextField(
+              controller: txtPassword,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Password',
               ),
             ),
@@ -54,9 +56,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               height: 20,
             ),
             if (!isLogin)
-              const TextField(
+              TextField(
+                controller: txtConfirmPassword,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Confirm Password',
                 ),
               ),
@@ -66,10 +69,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             FilledButton(
               onPressed: () async {
                 if (isLogin) {
-                  final res = await ref.read(authRepoProvider).login();
-                  res.fold((l) => null, (r) {
-                    context.router.replace(const NoStoreRoute());
-                  });
+                  ref.read(authNotifierProvider.notifier).login(txtUsername.text, txtPassword.text);
                 }
               },
               child: Text(isLogin ? 'Login' : 'Register'),
@@ -86,9 +86,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 TextButton(
                     onPressed: () {
-                      setState(() {
-                        isLogin = !isLogin;
-                      });
+                      isLoginNotifier.value = !isLogin;
                     },
                     child: Text(
                       isLogin ? 'Register' : 'Login',

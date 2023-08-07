@@ -6,7 +6,7 @@ part of 'authen_interceptor.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authInterceptorHash() => r'fd12b037c6531c933096c3fb1f2bc7b81fefdb74';
+String _$authInterceptorHash() => r'b7adeeaa22a707977f080274949e29d211b9b154';
 
 /// See also [authInterceptor].
 @ProviderFor(authInterceptor)

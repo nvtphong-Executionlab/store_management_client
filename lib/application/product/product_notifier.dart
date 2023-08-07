@@ -5,8 +5,7 @@ import 'package:store_management_client/infrastructure/repositories/product_repo
 
 part 'product_notifier.g.dart';
 
-const _emptyResponse = PaginationResponse<ProductModel>(
-    currentPage: 0, totalItems: 0, totalPages: 1);
+const _emptyResponse = PaginationResponse<ProductModel>(currentPage: 0, totalItems: 0, totalPages: 1);
 
 @riverpod
 class ProductNotifier extends _$ProductNotifier {
@@ -19,27 +18,36 @@ class ProductNotifier extends _$ProductNotifier {
     return _emptyResponse;
   }
 
-  Future getProducts() async {
-    final result = await _productRepo.getProducts(
-        page: (state.value?.currentPage ?? 0) + 1);
+  Future getProducts({bool refresh = false}) async {
+    if (refresh) {
+      final result = await _productRepo.getProducts(page: 1);
+      state = AsyncData(result.fold((l) => _emptyResponse, (r) => r));
+    } else {
+      final result = await _productRepo.getProducts(page: (state.value?.currentPage ?? 0) + 1);
 
-    state = AsyncData(result.fold((l) => _emptyResponse, (r) {
-      return r.copyWith(data: [...(state.value?.data ?? []), ...r.data]);
-    }));
+      state = AsyncData(result.fold((l) => _emptyResponse, (r) {
+        return r.copyWith(data: [...(state.value?.data ?? []), ...r.data]);
+      }));
+    }
   }
 
-  Future searchProduct({String keyword = ''}) async {
-    final result = await _productRepo.searchProduct(keyword);
-    state = AsyncData(result.fold((l) => _emptyResponse, (r) => r));
+  Future searchProduct({String keyword = '', bool refresh = false}) async {
+    if (refresh) {
+      final result = await _productRepo.searchProduct(keyword);
+      state = AsyncData(result.fold((l) => _emptyResponse, (r) => r));
+    } else {
+      final result = await _productRepo.searchProduct(keyword, page: (state.value?.currentPage ?? 0) + 1);
+      state = AsyncData(
+          result.fold((l) => _emptyResponse, (r) => r.copyWith(data: [...(state.value?.data ?? []), ...r.data])));
+    }
   }
 
   Future addProducts(List<ProductModel> products) async {
     final result = await _productRepo.addProducts(products);
     result.fold((l) => null, (r) {
       final currentData = state.value ?? _emptyResponse;
-      state = AsyncData(currentData.copyWith(
-          totalItems: currentData.totalItems + r.length,
-          data: [...currentData.data, ...r]));
+      state = AsyncData(
+          currentData.copyWith(totalItems: currentData.totalItems + r.length, data: [...currentData.data, ...r]));
     });
   }
 
@@ -51,8 +59,7 @@ class ProductNotifier extends _$ProductNotifier {
       final currentState = state.value ?? _emptyResponse;
       final currentData = [...currentState.data];
       for (int i = 0; i < currentData.length; ++i) {
-        final index =
-            products.indexWhere((element) => element.ID == currentData[i].ID);
+        final index = products.indexWhere((element) => element.ID == currentData[i].ID);
         if (index > -1) {
           currentData[i] = products[index];
         }
@@ -69,14 +76,12 @@ class ProductNotifier extends _$ProductNotifier {
       final currentState = state.value ?? _emptyResponse;
       final currentData = [...currentState.data];
       for (int i = 0; i < currentData.length; ++i) {
-        final index =
-            products.indexWhere((element) => element.ID == currentData[i].ID);
+        final index = products.indexWhere((element) => element.ID == currentData[i].ID);
         if (index > -1) {
           currentData.removeAt(i);
         }
       }
-      state = AsyncData(currentState.copyWith(
-          data: currentData, totalItems: currentState.totalItems - 1));
+      state = AsyncData(currentState.copyWith(data: currentData, totalItems: currentState.totalItems - 1));
     });
   }
 }

@@ -36,7 +36,7 @@ class HttpService {
 @riverpod
 Dio dio(DioRef ref) {
   return Dio(BaseOptions(
-    baseUrl: 'http://192.168.0.102:8080/api/v1/',
+    baseUrl: 'http://127.0.0.1:8080/api/v1/',
     connectTimeout: const Duration(milliseconds: 30000),
     receiveTimeout: const Duration(milliseconds: 30000),
     followRedirects: false,

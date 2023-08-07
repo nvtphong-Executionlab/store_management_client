@@ -24,12 +24,12 @@ class ProductScreen extends StatefulHookConsumerWidget {
 
 class _ProductScreenState extends ConsumerState<ProductScreen> {
   final fabkey = GlobalKey<ExpandableFabState>();
-  final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   @override
   Widget build(BuildContext context) {
     final asyncListProduct = ref.watch(productNotifierProvider);
+    final searchController = useTextEditingController();
 
     return GestureDetector(
       onTap: FocusManager.instance.primaryFocus?.unfocus,
@@ -79,9 +79,8 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
             children: [
               HookBuilder(builder: (context) {
                 final searchFocusNode = useFocusNode();
-                final animationController = useAnimationController(
-                    duration: const Duration(milliseconds: 300),
-                    upperBound: 24);
+                final animationController =
+                    useAnimationController(duration: const Duration(milliseconds: 300), upperBound: 24);
                 useEffect(() {
                   onFocus() {
                     if (searchFocusNode.hasFocus) {
@@ -103,16 +102,13 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                   children: [
                     Expanded(
                       child: TextField(
+                        controller: searchController,
                         focusNode: searchFocusNode,
                         onChanged: (value) {
                           if (value.isEmpty) {
-                            ref
-                                .read(productNotifierProvider.notifier)
-                                .getProducts();
+                            ref.read(productNotifierProvider.notifier).getProducts(refresh: true);
                           } else {
-                            ref
-                                .read(productNotifierProvider.notifier)
-                                .searchProduct(keyword: value);
+                            ref.read(productNotifierProvider.notifier).searchProduct(keyword: value, refresh: true);
                           }
                         },
                         decoration: InputDecoration(
@@ -131,9 +127,7 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                       // width: searchFocusNode.hasFocus ? 30 : 0,
                       builder: (context, child) {
                         return SizedBox(
-                          width: animationController.value > 0
-                              ? animationController.value + 20
-                              : 0,
+                          width: animationController.value > 0 ? animationController.value + 20 : 0,
                           child: IconButton(
                             onPressed: () {},
                             icon: Icon(
@@ -160,9 +154,7 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         decoration: const BoxDecoration(
                           color: AppColors.primaryVeryLight,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10)),
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                         ),
                         child: const Row(
                           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -187,17 +179,19 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                       child: DefaultTextStyle(
                         style: Theme.of(context).textTheme.labelMedium!,
                         child: asyncListProduct.maybeWhen(
-                          orElse: () =>
-                              const Center(child: CircularProgressIndicator()),
+                          orElse: () => const Center(child: CircularProgressIndicator()),
                           data: (response) => SmartRefresher(
                             controller: _refreshController,
-                            enablePullUp:
-                                response.totalPages > response.currentPage,
+                            enablePullUp: response.totalPages > response.currentPage,
                             enablePullDown: false,
                             onLoading: () async {
-                              await ref
-                                  .read(productNotifierProvider.notifier)
-                                  .getProducts();
+                              if (searchController.text.isNotEmpty) {
+                                await ref
+                                    .read(productNotifierProvider.notifier)
+                                    .searchProduct(keyword: searchController.text);
+                              } else {
+                                await ref.read(productNotifierProvider.notifier).getProducts();
+                              }
                               _refreshController.loadComplete();
                             },
                             child: ListView.builder(

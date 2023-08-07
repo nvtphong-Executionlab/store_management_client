@@ -5,13 +5,15 @@ import 'request_param.dart';
 
 class SearchProductParam extends IParam {
   final String keyword;
-  SearchProductParam(this.keyword);
+  final int page;
+  final int limit;
+  SearchProductParam(this.keyword, {this.page = 1, this.limit = 10});
 
   @override
   Map<String, dynamic> get json => {'keyword': keyword};
 
   @override
-  String get link => 'products/search';
+  String get link => 'products/search?page=$page&limit=$limit';
 }
 
 class CUDProductParam extends IParam {
