@@ -20,35 +20,46 @@ class MyApp extends ConsumerWidget {
     ref.listen(authNotifierProvider, (prev, next) {
       final currenContext = _appRouter.navigatorKey.currentContext ?? context;
 
-      next.when(authenticated: () async {
-        // await _appRouter.root.pop();
-        if (context.mounted) {
-          currenContext.router.pushAndPopUntil(const HomeRoute(), predicate: (_) => false);
-        }
-      }, authenticating: () {
-        showLoadingDialog(currenContext);
-      }, unAuthenticated: () {
-        currenContext.router.pushAndPopUntil(const LoginRoute(), predicate: (_) => false);
-      }, error: (message) async {
-        await currenContext.router.root.pop();
-        if (context.mounted) {
-          showDialog(
-              context: currenContext,
-              builder: (_) {
-                return Dialog(
-                  child: Column(
-                    children: [
-                      const Icon(Icons.error),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(message)
-                    ],
-                  ),
-                );
-              });
-        }
-      });
+      next.when(
+        authenticated: () async {
+          // await _appRouter.root.pop();
+          if (context.mounted) {
+            currenContext.router
+                .pushAndPopUntil(const HomeRoute(), predicate: (_) => false);
+          }
+        },
+        authenticating: () {
+          showLoadingDialog(currenContext);
+        },
+        unAuthenticated: () {
+          currenContext.router
+              .pushAndPopUntil(const LoginRoute(), predicate: (_) => false);
+        },
+        error: (message) async {
+          await currenContext.router.root.pop();
+          if (context.mounted) {
+            showDialog(
+                context: currenContext,
+                builder: (_) {
+                  return Dialog(
+                    child: Column(
+                      children: [
+                        const Icon(Icons.error),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(message)
+                      ],
+                    ),
+                  );
+                });
+          }
+        },
+        noStore: () {
+          currenContext.router
+              .pushAndPopUntil(const NoStoreRoute(), predicate: (_) => false);
+        },
+      );
     });
     return MaterialApp.router(
       routerConfig: _appRouter.config(),

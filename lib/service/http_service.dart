@@ -5,7 +5,7 @@ import 'package:store_management_client/infrastructure/models/response/failure_m
 import 'package:store_management_client/service/authen_interceptor.dart';
 import 'package:store_management_client/service/request_param/request_param.dart';
 import 'package:store_management_client/service/request_wrapper.dart';
-
+import 'dart:io' show Platform;
 part 'http_service.g.dart';
 
 class HttpService {
@@ -36,7 +36,9 @@ class HttpService {
 @riverpod
 Dio dio(DioRef ref) {
   return Dio(BaseOptions(
-    baseUrl: 'http://127.0.0.1:8080/api/v1/',
+    baseUrl: Platform.isAndroid
+        ? 'http://192.168.0.102:8080/api/v1/'
+        : 'http://127.0.0.1:8080/api/v1/',
     connectTimeout: const Duration(milliseconds: 30000),
     receiveTimeout: const Duration(milliseconds: 30000),
     followRedirects: false,

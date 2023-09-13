@@ -19,81 +19,92 @@ class LoginScreen extends HookConsumerWidget {
     final txtPassword = useTextEditingController();
     final txtConfirmPassword = useTextEditingController();
 
-    return Scaffold(
-      body: Padding(
-        padding: PaddingConstants.paddingLayout,
-        child: Column(
-          // itemExtent: 0,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              isLogin ? 'Login' : 'Register',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headlineLarge,
-            ),
-            Image.asset('assets/banner.png'),
-            const SizedBox(
-              height: 30,
-            ),
-            TextField(
-              controller: txtUsername,
-              decoration: const InputDecoration(
-                hintText: 'Username',
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextField(
-              controller: txtPassword,
-              obscureText: true,
-              decoration: const InputDecoration(
-                hintText: 'Password',
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            if (!isLogin)
-              TextField(
-                controller: txtConfirmPassword,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  hintText: 'Confirm Password',
-                ),
-              ),
-            const SizedBox(
-              height: 20,
-            ),
-            FilledButton(
-              onPressed: () async {
-                if (isLogin) {
-                  ref.read(authNotifierProvider.notifier).login(txtUsername.text, txtPassword.text);
-                }
-              },
-              child: Text(isLogin ? 'Login' : 'Register'),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            Row(
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        body: Padding(
+          padding: PaddingConstants.paddingLayout,
+          child: SingleChildScrollView(
+            child: Column(
+              // itemExtent: 0,
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  isLogin ? 'New user?' : 'Already have account?',
-                  style: Theme.of(context).textTheme.labelSmall,
+                  isLogin ? 'Login' : 'Register',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headlineLarge,
                 ),
-                TextButton(
-                    onPressed: () {
-                      isLoginNotifier.value = !isLogin;
-                    },
-                    child: Text(
-                      isLogin ? 'Register' : 'Login',
-                    ))
+                Image.asset('assets/banner.png'),
+                const SizedBox(
+                  height: 30,
+                ),
+                TextField(
+                  controller: txtUsername,
+                  decoration: const InputDecoration(
+                    hintText: 'Username',
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  controller: txtPassword,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    hintText: 'Password',
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                if (!isLogin)
+                  TextField(
+                    controller: txtConfirmPassword,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      hintText: 'Confirm Password',
+                    ),
+                  ),
+                const SizedBox(
+                  height: 20,
+                ),
+                FilledButton(
+                  onPressed: () async {
+                    if (isLogin) {
+                      ref
+                          .read(authNotifierProvider.notifier)
+                          .login(txtUsername.text, txtPassword.text);
+                    } else {
+                      ref
+                          .read(authNotifierProvider.notifier)
+                          .signUp(txtUsername.text, txtPassword.text);
+                    }
+                  },
+                  child: Text(isLogin ? 'Login' : 'Register'),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      isLogin ? 'New user?' : 'Already have account?',
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          isLoginNotifier.value = !isLogin;
+                        },
+                        child: Text(
+                          isLogin ? 'Register' : 'Login',
+                        ))
+                  ],
+                )
               ],
-            )
-          ],
+            ),
+          ),
         ),
       ),
     );

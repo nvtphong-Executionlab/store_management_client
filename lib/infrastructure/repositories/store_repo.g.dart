@@ -1,24 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_notifier.dart';
+part of 'store_repo.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authNotifierHash() => r'8c8ebf27c7bceeba9f5d951e5617118c506ccffa';
+String _$storeRepoHash() => r'f530326ba6caadca2fc1545331e521938785cefa';
 
-/// See also [AuthNotifier].
-@ProviderFor(AuthNotifier)
-final authNotifierProvider =
-    AutoDisposeNotifierProvider<AuthNotifier, AuthState>.internal(
-  AuthNotifier.new,
-  name: r'authNotifierProvider',
+/// See also [storeRepo].
+@ProviderFor(storeRepo)
+final storeRepoProvider = AutoDisposeProvider<StoreRepository>.internal(
+  storeRepo,
+  name: r'storeRepoProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$authNotifierHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$storeRepoHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$AuthNotifier = AutoDisposeNotifier<AuthState>;
+typedef StoreRepoRef = AutoDisposeProviderRef<StoreRepository>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
