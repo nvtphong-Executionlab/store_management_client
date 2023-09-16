@@ -6,7 +6,7 @@ part of 'history_detail_screen.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$saleDetailHash() => r'73a84211c296f595266fbb404c706ca87ffef7b6';
+String _$saleDetailHash() => r'a6d5ebb66991da4c563f97ffc941797dc732968e';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -109,4 +109,5 @@ class SaleDetailProvider extends AutoDisposeFutureProvider<SaleDetail> {
     return _SystemHash.finish(hash);
   }
 }
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member

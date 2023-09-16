@@ -8,7 +8,7 @@ class ProductModel with _$ProductModel {
   const ProductModel._();
   @JsonSerializable(fieldRename: FieldRename.pascal)
   factory ProductModel({
-    @Default(0) int ID,
+    @Default('') String ID,
     @Default('') String productName,
     @Default(0) int stock,
     @Default(0.0) double priceIn,

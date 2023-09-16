@@ -8,7 +8,7 @@ part of 'sale_item_model.dart';
 
 _$_SaleItem _$$_SaleItemFromJson(Map<String, dynamic> json) => _$_SaleItem(
       saleID: json['SaleID'] as int,
-      ID: json['ID'] as int,
+      ID: json['ID'] as String,
       stock: json['Stock'] as int,
       product: ProductModel.fromJson(json['Product'] as Map<String, dynamic>),
     );

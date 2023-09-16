@@ -1,6 +1,6 @@
 import 'package:store_management_client/service/request_param/request_param.dart';
 
-class CreateStoreParam extends IParam {
+class CreateStoreParam extends CUDParam {
   final String storeName;
   final String address;
 
@@ -16,22 +16,16 @@ class CreateStoreParam extends IParam {
   String get link => 'store';
 }
 
-class GetStoreInfoParam extends IParam {
-  @override
-  Map<String, dynamic> get json => {};
-
+class GetStoreInfoParam extends GetParam {
   @override
   String get link => 'store';
 }
 
-class GetStoresParam extends IParam {
+class GetStoresParam extends GetParam {
   final int page;
   final int limit;
 
   GetStoresParam(this.page, this.limit);
-
-  @override
-  Map<String, dynamic> get json => {};
 
   @override
   String get link => 'store/list?page=$page&limit=$limit';

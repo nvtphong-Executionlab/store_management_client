@@ -1,6 +1,6 @@
 import 'package:store_management_client/service/request_param/request_param.dart';
 
-class LoginParam extends IParam {
+class LoginParam extends CUDParam {
   final String username;
   final String password;
   LoginParam(this.username, this.password);
@@ -29,10 +29,7 @@ class SignUpParam extends LoginParam {
   String get link => 'signup';
 }
 
-class UserInfoParam extends IParam {
-  @override
-  Map<String, dynamic> get json => {};
-
+class UserInfoParam extends GetParam {
   @override
   String get link => 'user';
 }

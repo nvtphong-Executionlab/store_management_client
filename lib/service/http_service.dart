@@ -12,23 +12,22 @@ class HttpService {
   final Dio _dio;
   HttpService(this._dio);
 
-  Future<Either<FailureModel, T>> getData<T>(IParam param) async {
+  Future<Either<FailureModel, T>> getData<T>(GetParam param) async {
     return requestWrapper<T>(_dio.get(
       param.link,
       queryParameters: param.queryParam,
-      data: param.json,
     ));
   }
 
-  Future<Either<FailureModel, T>> postData<T>(IParam param) async {
+  Future<Either<FailureModel, T>> postData<T>(CUDParam param) async {
     return requestWrapper<T>(_dio.post(param.link, data: param.json));
   }
 
-  Future<Either<FailureModel, T>> putData<T>(IParam param) async {
+  Future<Either<FailureModel, T>> putData<T>(CUDParam param) async {
     return requestWrapper<T>(_dio.put(param.link, data: param.json));
   }
 
-  Future<Either<FailureModel, T>> deleteData<T>(IParam param) async {
+  Future<Either<FailureModel, T>> deleteData<T>(CUDParam param) async {
     return requestWrapper(_dio.delete(param.link, data: param.json));
   }
 }
@@ -36,9 +35,7 @@ class HttpService {
 @riverpod
 Dio dio(DioRef ref) {
   return Dio(BaseOptions(
-    baseUrl: Platform.isAndroid
-        ? 'http://192.168.0.102:8080/api/v1/'
-        : 'http://127.0.0.1:8080/api/v1/',
+    baseUrl: 'http://192.168.0.109:8080/api/v1/',
     connectTimeout: const Duration(milliseconds: 30000),
     receiveTimeout: const Duration(milliseconds: 30000),
     followRedirects: false,

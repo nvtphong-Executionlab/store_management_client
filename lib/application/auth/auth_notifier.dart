@@ -19,24 +19,22 @@ class AuthState with _$AuthState {
 
 @riverpod
 class AuthNotifier extends _$AuthNotifier {
-  late final AuthRepository _authRepository;
   @override
   AuthState build() {
-    _authRepository = ref.watch(authRepoProvider);
     isExpiredToken();
     return const AuthState.unAuthenticated();
   }
 
   Future login(String username, String password) async {
     state = const AuthState.authenticating();
-    final res = await _authRepository.login(username, password);
+    final res = await ref.watch(authRepoProvider).login(username, password);
     state = res.fold((l) => const _Error('Login failed'),
         (r) => const AuthState.authenticated());
   }
 
   Future signUp(String username, String password) async {
     state = const AuthState.authenticating();
-    final res = await _authRepository.signUp(username, password);
+    final res = await ref.watch(authRepoProvider).signUp(username, password);
     state = res.fold((l) => const _Error('Sign up failed'),
         (r) => const AuthState.unAuthenticated());
   }

@@ -30,6 +30,7 @@ class AuthenticationInterceptor extends QueuedInterceptor {
     final accessToken = pref.getString('access_token');
     options.headers['Authorization'] = '$accessToken';
     options.headers['Content-Type'] = 'application/json';
+    log("on request: ${options.path}\nwith data: ${options.data}");
   }
 
   @override
