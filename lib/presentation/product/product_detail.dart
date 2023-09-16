@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:store_management_client/application/product/product_notifier.dart';
@@ -183,7 +184,8 @@ class _ProductFormState extends ConsumerState<ProductForm> {
   void updateProductInfo(String productID) {
     ref.read(searchProductProvider(keyword: productID).future).then((value) {
       // setState(() {
-      initProduct = value ?? ProductModel(ID: int.tryParse(productID) ?? 0);
+      initProduct = value ?? ProductModel(ID: productID);
+      print(initProduct.toJson());
       widget.onUpdate(initProduct);
       // });
     });
@@ -206,96 +208,104 @@ class _ProductFormState extends ConsumerState<ProductForm> {
 
       return GestureDetector(
         onTap: FocusManager.instance.primaryFocus?.unfocus,
-        child:
-            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Stack(
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
             children: [
+              Stack(
+                children: [
+                  TextField(
+                    controller: idController,
+                    onChanged: (value) {
+                      updateProductInfo(value);
+                    },
+                    decoration: const InputDecoration(
+                      hintText: 'Product ID',
+                      contentPadding: EdgeInsets.only(right: 50, left: 10),
+                    ),
+                    keyboardType: TextInputType.number,
+                  ),
+                  Positioned(
+                    right: 0,
+                    child: IconButton(
+                      onPressed: () async {
+                        final barCode = await FlutterBarcodeScanner.scanBarcode(
+                            '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+                        idController.text = barCode;
+                        updateProductInfo(barCode);
+                      },
+                      icon: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: AppColors.greyDark),
+                        ),
+                        child: const Icon(
+                          Icons.qr_code_2,
+                          size: 30,
+                        ),
+                      ),
+                      // child: const Icon(Icons.qr_code_2),
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               TextField(
-                controller: idController,
+                controller: nameController,
                 onChanged: (value) {
-                  updateProductInfo(value);
+                  initProduct = initProduct.copyWith(productName: value);
+                  widget.onUpdate(initProduct);
                 },
                 decoration: const InputDecoration(
-                  hintText: 'Product ID',
-                  contentPadding: EdgeInsets.only(right: 50, left: 10),
+                  hintText: 'Product Name',
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              if (widget.action != ProductAction.sell)
+                TextField(
+                  controller: priceInController,
+                  decoration: const InputDecoration(
+                    hintText: 'Price In',
+                  ),
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                ),
+              if (widget.action != ProductAction.sell)
+                const SizedBox(
+                  height: 10,
+                ),
+              TextField(
+                controller: priceOutController,
+                decoration: const InputDecoration(
+                  hintText: 'Price Out',
+                ),
+                onChanged: (value) {
+                  initProduct = initProduct.copyWith(
+                      priceOut: double.tryParse(value) ?? 0);
+                  widget.onUpdate(initProduct);
+                },
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextField(
+                controller: stockController,
+                onChanged: (value) {
+                  initProduct =
+                      initProduct.copyWith(stock: int.tryParse(value) ?? 0);
+                  widget.onUpdate(initProduct);
+                },
+                decoration: const InputDecoration(
+                  hintText: 'Stock',
                 ),
                 keyboardType: TextInputType.number,
               ),
-              Positioned(
-                right: 0,
-                child: IconButton(
-                  onPressed: () {},
-                  icon: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.greyDark),
-                    ),
-                    child: const Icon(
-                      Icons.qr_code_2,
-                      size: 30,
-                    ),
-                  ),
-                  // child: const Icon(Icons.qr_code_2),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextField(
-            controller: nameController,
-            onChanged: (value) {
-              initProduct = initProduct.copyWith(productName: value);
-              widget.onUpdate(initProduct);
-            },
-            decoration: const InputDecoration(
-              hintText: 'Product Name',
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          if (widget.action != ProductAction.sell)
-            TextField(
-              controller: priceInController,
-              decoration: const InputDecoration(
-                hintText: 'Price In',
-              ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-          if (widget.action != ProductAction.sell)
-            const SizedBox(
-              height: 10,
-            ),
-          TextField(
-            controller: priceOutController,
-            decoration: const InputDecoration(
-              hintText: 'Price Out',
-            ),
-            onChanged: (value) {
-              initProduct =
-                  initProduct.copyWith(priceOut: double.tryParse(value) ?? 0);
-              widget.onUpdate(initProduct);
-            },
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextField(
-            controller: stockController,
-            onChanged: (value) {
-              initProduct =
-                  initProduct.copyWith(stock: int.tryParse(value) ?? 0);
-              widget.onUpdate(initProduct);
-            },
-            decoration: const InputDecoration(
-              hintText: 'Stock',
-            ),
-            keyboardType: TextInputType.number,
-          ),
-        ]),
+            ]),
       );
     });
   }

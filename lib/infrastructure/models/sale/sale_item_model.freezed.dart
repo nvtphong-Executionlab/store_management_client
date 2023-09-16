@@ -21,7 +21,7 @@ SaleItem _$SaleItemFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SaleItem {
   int get saleID => throw _privateConstructorUsedError;
-  int get ID => throw _privateConstructorUsedError; // productID
+  String get ID => throw _privateConstructorUsedError; // productID
   int get stock => throw _privateConstructorUsedError;
   ProductModel get product => throw _privateConstructorUsedError;
 
@@ -36,7 +36,7 @@ abstract class $SaleItemCopyWith<$Res> {
   factory $SaleItemCopyWith(SaleItem value, $Res Function(SaleItem) then) =
       _$SaleItemCopyWithImpl<$Res, SaleItem>;
   @useResult
-  $Res call({int saleID, int ID, int stock, ProductModel product});
+  $Res call({int saleID, String ID, int stock, ProductModel product});
 
   $ProductModelCopyWith<$Res> get product;
 }
@@ -67,7 +67,7 @@ class _$SaleItemCopyWithImpl<$Res, $Val extends SaleItem>
       ID: null == ID
           ? _value.ID
           : ID // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       stock: null == stock
           ? _value.stock
           : stock // ignore: cast_nullable_to_non_nullable
@@ -95,7 +95,7 @@ abstract class _$$_SaleItemCopyWith<$Res> implements $SaleItemCopyWith<$Res> {
       __$$_SaleItemCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int saleID, int ID, int stock, ProductModel product});
+  $Res call({int saleID, String ID, int stock, ProductModel product});
 
   @override
   $ProductModelCopyWith<$Res> get product;
@@ -125,7 +125,7 @@ class __$$_SaleItemCopyWithImpl<$Res>
       ID: null == ID
           ? _value.ID
           : ID // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       stock: null == stock
           ? _value.stock
           : stock // ignore: cast_nullable_to_non_nullable
@@ -155,7 +155,7 @@ class _$_SaleItem extends _SaleItem {
   @override
   final int saleID;
   @override
-  final int ID;
+  final String ID;
 // productID
   @override
   final int stock;
@@ -199,7 +199,7 @@ class _$_SaleItem extends _SaleItem {
 abstract class _SaleItem extends SaleItem {
   const factory _SaleItem(
       {required final int saleID,
-      required final int ID,
+      required final String ID,
       required final int stock,
       required final ProductModel product}) = _$_SaleItem;
   const _SaleItem._() : super._();
@@ -209,7 +209,7 @@ abstract class _SaleItem extends SaleItem {
   @override
   int get saleID;
   @override
-  int get ID;
+  String get ID;
   @override // productID
   int get stock;
   @override

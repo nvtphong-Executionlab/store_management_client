@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -13,7 +14,8 @@ class AuthenticationInterceptor extends QueuedInterceptor {
   AuthenticationInterceptor(this._authNotifier);
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+  void onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
     if (await _authNotifier.isExpiredToken()) {
       _authNotifier.logout();
       handler.reject(DioException(requestOptions: options), true);
@@ -28,6 +30,19 @@ class AuthenticationInterceptor extends QueuedInterceptor {
     final accessToken = pref.getString('access_token');
     options.headers['Authorization'] = '$accessToken';
     options.headers['Content-Type'] = 'application/json';
+    log("on request: ${options.path}\nwith data: ${options.data}");
+  }
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    // TODO: implement onError
+    log(err.response?.data['message'] ?? '');
+    if (err.response?.data['message'] ==
+        'You have not created or joined a store') {
+      log('No store');
+      _authNotifier.noStore();
+    }
+    super.onError(err, handler);
   }
 }
 

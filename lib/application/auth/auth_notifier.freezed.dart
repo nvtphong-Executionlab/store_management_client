@@ -22,6 +22,7 @@ mixin _$AuthState {
     required TResult Function() authenticating,
     required TResult Function() unAuthenticated,
     required TResult Function(String errorMessage) error,
+    required TResult Function() noStore,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,6 +31,7 @@ mixin _$AuthState {
     TResult? Function()? authenticating,
     TResult? Function()? unAuthenticated,
     TResult? Function(String errorMessage)? error,
+    TResult? Function()? noStore,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +40,7 @@ mixin _$AuthState {
     TResult Function()? authenticating,
     TResult Function()? unAuthenticated,
     TResult Function(String errorMessage)? error,
+    TResult Function()? noStore,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +50,7 @@ mixin _$AuthState {
     required TResult Function(_Auththenticating value) authenticating,
     required TResult Function(_UnAuthenticated value) unAuthenticated,
     required TResult Function(_Error value) error,
+    required TResult Function(_NoStore value) noStore,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +59,7 @@ mixin _$AuthState {
     TResult? Function(_Auththenticating value)? authenticating,
     TResult? Function(_UnAuthenticated value)? unAuthenticated,
     TResult? Function(_Error value)? error,
+    TResult? Function(_NoStore value)? noStore,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +68,7 @@ mixin _$AuthState {
     TResult Function(_Auththenticating value)? authenticating,
     TResult Function(_UnAuthenticated value)? unAuthenticated,
     TResult Function(_Error value)? error,
+    TResult Function(_NoStore value)? noStore,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -127,6 +133,7 @@ class _$_Authenticated extends _Authenticated {
     required TResult Function() authenticating,
     required TResult Function() unAuthenticated,
     required TResult Function(String errorMessage) error,
+    required TResult Function() noStore,
   }) {
     return authenticated();
   }
@@ -138,6 +145,7 @@ class _$_Authenticated extends _Authenticated {
     TResult? Function()? authenticating,
     TResult? Function()? unAuthenticated,
     TResult? Function(String errorMessage)? error,
+    TResult? Function()? noStore,
   }) {
     return authenticated?.call();
   }
@@ -149,6 +157,7 @@ class _$_Authenticated extends _Authenticated {
     TResult Function()? authenticating,
     TResult Function()? unAuthenticated,
     TResult Function(String errorMessage)? error,
+    TResult Function()? noStore,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -164,6 +173,7 @@ class _$_Authenticated extends _Authenticated {
     required TResult Function(_Auththenticating value) authenticating,
     required TResult Function(_UnAuthenticated value) unAuthenticated,
     required TResult Function(_Error value) error,
+    required TResult Function(_NoStore value) noStore,
   }) {
     return authenticated(this);
   }
@@ -175,6 +185,7 @@ class _$_Authenticated extends _Authenticated {
     TResult? Function(_Auththenticating value)? authenticating,
     TResult? Function(_UnAuthenticated value)? unAuthenticated,
     TResult? Function(_Error value)? error,
+    TResult? Function(_NoStore value)? noStore,
   }) {
     return authenticated?.call(this);
   }
@@ -186,6 +197,7 @@ class _$_Authenticated extends _Authenticated {
     TResult Function(_Auththenticating value)? authenticating,
     TResult Function(_UnAuthenticated value)? unAuthenticated,
     TResult Function(_Error value)? error,
+    TResult Function(_NoStore value)? noStore,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -242,6 +254,7 @@ class _$_Auththenticating extends _Auththenticating {
     required TResult Function() authenticating,
     required TResult Function() unAuthenticated,
     required TResult Function(String errorMessage) error,
+    required TResult Function() noStore,
   }) {
     return authenticating();
   }
@@ -253,6 +266,7 @@ class _$_Auththenticating extends _Auththenticating {
     TResult? Function()? authenticating,
     TResult? Function()? unAuthenticated,
     TResult? Function(String errorMessage)? error,
+    TResult? Function()? noStore,
   }) {
     return authenticating?.call();
   }
@@ -264,6 +278,7 @@ class _$_Auththenticating extends _Auththenticating {
     TResult Function()? authenticating,
     TResult Function()? unAuthenticated,
     TResult Function(String errorMessage)? error,
+    TResult Function()? noStore,
     required TResult orElse(),
   }) {
     if (authenticating != null) {
@@ -279,6 +294,7 @@ class _$_Auththenticating extends _Auththenticating {
     required TResult Function(_Auththenticating value) authenticating,
     required TResult Function(_UnAuthenticated value) unAuthenticated,
     required TResult Function(_Error value) error,
+    required TResult Function(_NoStore value) noStore,
   }) {
     return authenticating(this);
   }
@@ -290,6 +306,7 @@ class _$_Auththenticating extends _Auththenticating {
     TResult? Function(_Auththenticating value)? authenticating,
     TResult? Function(_UnAuthenticated value)? unAuthenticated,
     TResult? Function(_Error value)? error,
+    TResult? Function(_NoStore value)? noStore,
   }) {
     return authenticating?.call(this);
   }
@@ -301,6 +318,7 @@ class _$_Auththenticating extends _Auththenticating {
     TResult Function(_Auththenticating value)? authenticating,
     TResult Function(_UnAuthenticated value)? unAuthenticated,
     TResult Function(_Error value)? error,
+    TResult Function(_NoStore value)? noStore,
     required TResult orElse(),
   }) {
     if (authenticating != null) {
@@ -357,6 +375,7 @@ class _$_UnAuthenticated extends _UnAuthenticated {
     required TResult Function() authenticating,
     required TResult Function() unAuthenticated,
     required TResult Function(String errorMessage) error,
+    required TResult Function() noStore,
   }) {
     return unAuthenticated();
   }
@@ -368,6 +387,7 @@ class _$_UnAuthenticated extends _UnAuthenticated {
     TResult? Function()? authenticating,
     TResult? Function()? unAuthenticated,
     TResult? Function(String errorMessage)? error,
+    TResult? Function()? noStore,
   }) {
     return unAuthenticated?.call();
   }
@@ -379,6 +399,7 @@ class _$_UnAuthenticated extends _UnAuthenticated {
     TResult Function()? authenticating,
     TResult Function()? unAuthenticated,
     TResult Function(String errorMessage)? error,
+    TResult Function()? noStore,
     required TResult orElse(),
   }) {
     if (unAuthenticated != null) {
@@ -394,6 +415,7 @@ class _$_UnAuthenticated extends _UnAuthenticated {
     required TResult Function(_Auththenticating value) authenticating,
     required TResult Function(_UnAuthenticated value) unAuthenticated,
     required TResult Function(_Error value) error,
+    required TResult Function(_NoStore value) noStore,
   }) {
     return unAuthenticated(this);
   }
@@ -405,6 +427,7 @@ class _$_UnAuthenticated extends _UnAuthenticated {
     TResult? Function(_Auththenticating value)? authenticating,
     TResult? Function(_UnAuthenticated value)? unAuthenticated,
     TResult? Function(_Error value)? error,
+    TResult? Function(_NoStore value)? noStore,
   }) {
     return unAuthenticated?.call(this);
   }
@@ -416,6 +439,7 @@ class _$_UnAuthenticated extends _UnAuthenticated {
     TResult Function(_Auththenticating value)? authenticating,
     TResult Function(_UnAuthenticated value)? unAuthenticated,
     TResult Function(_Error value)? error,
+    TResult Function(_NoStore value)? noStore,
     required TResult orElse(),
   }) {
     if (unAuthenticated != null) {
@@ -497,6 +521,7 @@ class _$_Error extends _Error {
     required TResult Function() authenticating,
     required TResult Function() unAuthenticated,
     required TResult Function(String errorMessage) error,
+    required TResult Function() noStore,
   }) {
     return error(errorMessage);
   }
@@ -508,6 +533,7 @@ class _$_Error extends _Error {
     TResult? Function()? authenticating,
     TResult? Function()? unAuthenticated,
     TResult? Function(String errorMessage)? error,
+    TResult? Function()? noStore,
   }) {
     return error?.call(errorMessage);
   }
@@ -519,6 +545,7 @@ class _$_Error extends _Error {
     TResult Function()? authenticating,
     TResult Function()? unAuthenticated,
     TResult Function(String errorMessage)? error,
+    TResult Function()? noStore,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -534,6 +561,7 @@ class _$_Error extends _Error {
     required TResult Function(_Auththenticating value) authenticating,
     required TResult Function(_UnAuthenticated value) unAuthenticated,
     required TResult Function(_Error value) error,
+    required TResult Function(_NoStore value) noStore,
   }) {
     return error(this);
   }
@@ -545,6 +573,7 @@ class _$_Error extends _Error {
     TResult? Function(_Auththenticating value)? authenticating,
     TResult? Function(_UnAuthenticated value)? unAuthenticated,
     TResult? Function(_Error value)? error,
+    TResult? Function(_NoStore value)? noStore,
   }) {
     return error?.call(this);
   }
@@ -556,6 +585,7 @@ class _$_Error extends _Error {
     TResult Function(_Auththenticating value)? authenticating,
     TResult Function(_UnAuthenticated value)? unAuthenticated,
     TResult Function(_Error value)? error,
+    TResult Function(_NoStore value)? noStore,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -573,4 +603,124 @@ abstract class _Error extends AuthState {
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_NoStoreCopyWith<$Res> {
+  factory _$$_NoStoreCopyWith(
+          _$_NoStore value, $Res Function(_$_NoStore) then) =
+      __$$_NoStoreCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_NoStoreCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$_NoStore>
+    implements _$$_NoStoreCopyWith<$Res> {
+  __$$_NoStoreCopyWithImpl(_$_NoStore _value, $Res Function(_$_NoStore) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_NoStore extends _NoStore {
+  const _$_NoStore() : super._();
+
+  @override
+  String toString() {
+    return 'AuthState.noStore()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_NoStore);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() authenticated,
+    required TResult Function() authenticating,
+    required TResult Function() unAuthenticated,
+    required TResult Function(String errorMessage) error,
+    required TResult Function() noStore,
+  }) {
+    return noStore();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? authenticated,
+    TResult? Function()? authenticating,
+    TResult? Function()? unAuthenticated,
+    TResult? Function(String errorMessage)? error,
+    TResult? Function()? noStore,
+  }) {
+    return noStore?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? authenticated,
+    TResult Function()? authenticating,
+    TResult Function()? unAuthenticated,
+    TResult Function(String errorMessage)? error,
+    TResult Function()? noStore,
+    required TResult orElse(),
+  }) {
+    if (noStore != null) {
+      return noStore();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_Auththenticating value) authenticating,
+    required TResult Function(_UnAuthenticated value) unAuthenticated,
+    required TResult Function(_Error value) error,
+    required TResult Function(_NoStore value) noStore,
+  }) {
+    return noStore(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Auththenticating value)? authenticating,
+    TResult? Function(_UnAuthenticated value)? unAuthenticated,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_NoStore value)? noStore,
+  }) {
+    return noStore?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_Auththenticating value)? authenticating,
+    TResult Function(_UnAuthenticated value)? unAuthenticated,
+    TResult Function(_Error value)? error,
+    TResult Function(_NoStore value)? noStore,
+    required TResult orElse(),
+  }) {
+    if (noStore != null) {
+      return noStore(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _NoStore extends AuthState {
+  const factory _NoStore() = _$_NoStore;
+  const _NoStore._() : super._();
 }

@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:store_management_client/infrastructure/models/sale/sale_item_model.dart';
-import 'package:store_management_client/service/http_service.dart';
+import 'package:store_management_client/infrastructure/repositories/sale_repo.dart';
 
-import '../../service/request_param/sale_param.dart';
 part 'history_detail_screen.g.dart';
 
 @riverpod
 FutureOr<SaleDetail> saleDetail(SaleDetailRef ref, int saleID) async {
-  final httpService = ref.watch(httpServiceProvider);
-  final res = await httpService.getData<SaleDetail>(SellDetailParam(saleID));
+  final saleRepo = ref.watch(saleRepoProvider);
+  final res = await saleRepo.getSaleDetail(saleID);
   return res.fold((l) => const SaleDetail(totalPrice: 0), (r) => r);
 }
 

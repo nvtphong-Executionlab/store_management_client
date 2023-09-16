@@ -6,7 +6,7 @@ part of 'http_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dioHash() => r'e6deed0ad115c60fb3a2605522b6a0bd8ba38f33';
+String _$dioHash() => r'c10f51158b1ce5a278f9641453b438909b18a582';
 
 /// See also [dio].
 @ProviderFor(dio)
@@ -50,4 +50,5 @@ final httpServiceProvider = AutoDisposeProvider<HttpService>.internal(
 );
 
 typedef HttpServiceRef = AutoDisposeProviderRef<HttpService>;
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member

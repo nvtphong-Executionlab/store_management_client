@@ -15,7 +15,11 @@ class HomeScreen extends HookWidget {
     final scaffoldKey = useMemoized(() => GlobalKey<ScaffoldState>());
     return AutoTabsScaffold(
       key: scaffoldKey,
-      routes: const [StatisticRoute(), ProductRoute(), TransactionRoute()],
+      routes: const [
+        // StatisticRoute(),
+        ProductRoute(),
+        TransactionRoute(),
+      ],
       homeIndex: 0,
       drawer: const AppDrawer(),
       appBarBuilder: (context, tabsRouter) {
@@ -27,12 +31,12 @@ class HomeScreen extends HookWidget {
   }
 }
 
-final _drawerList = List.generate(4, (index) {
+final _drawerList = List.generate(3, (index) {
   return switch (index) {
-    0 => (index, Icons.stacked_bar_chart_sharp, 'Statistic'),
-    1 => (index, Icons.list, 'Product'),
-    2 => (index, Icons.monetization_on_sharp, 'Transaction'),
-    3 => (index, Icons.logout, 'Logout'),
+    // 0 => (index, Icons.stacked_bar_chart_sharp, 'Statistic'),
+    0 => (index, Icons.list, 'Product'),
+    1 => (index, Icons.monetization_on_sharp, 'Transaction'),
+    2 => (index, Icons.logout, 'Logout'),
     _ => throw UnimplementedError()
   };
 });
@@ -51,7 +55,7 @@ class AppDrawer extends ConsumerWidget {
                       leading: Icon(e.$2),
                       title: Text(e.$3),
                       onTap: () {
-                        if (e.$1 < 3) {
+                        if (e.$1 < 2) {
                           context.tabsRouter.setActiveIndex(e.$1);
                         } else {
                           ref.read(authNotifierProvider.notifier).logout();

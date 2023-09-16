@@ -7,6 +7,7 @@ import 'package:store_management_client/service/request_param/sale_param.dart';
 
 import '../../service/http_service.dart';
 import '../models/product/product_model.dart';
+import '../models/sale/sale_item_model.dart';
 part 'sale_repo.g.dart';
 
 class SaleRepository {
@@ -22,6 +23,10 @@ class SaleRepository {
       {int page = 1, int limit = 10}) async {
     return _httpService
         .getData<PaginationResponse<SaleModel>>(GetSaleParam(page, limit));
+  }
+
+  Future<Either<FailureModel, SaleDetail>> getSaleDetail(int saleId) async {
+    return _httpService.getData<SaleDetail>(SellDetailParam(saleId));
   }
 }
 

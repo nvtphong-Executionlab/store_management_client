@@ -24,7 +24,8 @@ class ProductScreen extends StatefulHookConsumerWidget {
 
 class _ProductScreenState extends ConsumerState<ProductScreen> {
   final fabkey = GlobalKey<ExpandableFabState>();
-  final RefreshController _refreshController = RefreshController(initialRefresh: false);
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,12 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
     final searchController = useTextEditingController();
 
     return GestureDetector(
-      onTap: FocusManager.instance.primaryFocus?.unfocus,
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+        if (fabkey.currentState?.isOpen ?? false) {
+          fabkey.currentState?.toggle();
+        }
+      },
       child: Scaffold(
         floatingActionButtonLocation: ExpandableFab.location,
         floatingActionButton: ExpandableFab(key: fabkey, children: [
@@ -41,8 +47,13 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
             onPressed: () {
               showModalBottomSheet(
                 context: context,
-                builder: (context) => const CommonProductForm(
-                  productAction: ProductAction.edit,
+                isScrollControlled: true,
+                builder: (context) => Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.viewInsetsOf(context).bottom),
+                  child: const CommonProductForm(
+                    productAction: ProductAction.edit,
+                  ),
                 ),
               );
             },
@@ -77,71 +88,6 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
           padding: PaddingConstants.paddingLayout,
           child: Column(
             children: [
-              HookBuilder(builder: (context) {
-                final searchFocusNode = useFocusNode();
-                final animationController =
-                    useAnimationController(duration: const Duration(milliseconds: 300), upperBound: 24);
-                useEffect(() {
-                  onFocus() {
-                    if (searchFocusNode.hasFocus) {
-                      animationController.forward();
-                    } else {
-                      animationController.reset();
-                    }
-                    setState(() {});
-                  }
-
-                  searchFocusNode.addListener(onFocus);
-
-                  return () {
-                    searchFocusNode.removeListener(onFocus);
-                  };
-                }, [searchFocusNode, animationController]);
-                return Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: searchController,
-                        focusNode: searchFocusNode,
-                        onChanged: (value) {
-                          if (value.isEmpty) {
-                            ref.read(productNotifierProvider.notifier).getProducts(refresh: true);
-                          } else {
-                            ref.read(productNotifierProvider.notifier).searchProduct(keyword: value, refresh: true);
-                          }
-                        },
-                        decoration: InputDecoration(
-                            hintText: 'Search products',
-                            prefixIcon: searchFocusNode.hasFocus
-                                ? null
-                                : Icon(
-                                    Icons.search,
-                                    size: 24 - animationController.value,
-                                  )),
-                      ),
-                    ),
-                    AnimatedBuilder(
-                      animation: animationController,
-                      // duration: const Duration(seconds: 1),
-                      // width: searchFocusNode.hasFocus ? 30 : 0,
-                      builder: (context, child) {
-                        return SizedBox(
-                          width: animationController.value > 0 ? animationController.value + 20 : 0,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.search,
-                              size: animationController.value,
-                              color: AppColors.primary,
-                            ),
-                          ),
-                        );
-                      },
-                    )
-                  ],
-                );
-              }),
               const SizedBox(
                 height: 20,
               ),
@@ -154,7 +100,9 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         decoration: const BoxDecoration(
                           color: AppColors.primaryVeryLight,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10)),
                         ),
                         child: const Row(
                           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -179,18 +127,23 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                       child: DefaultTextStyle(
                         style: Theme.of(context).textTheme.labelMedium!,
                         child: asyncListProduct.maybeWhen(
-                          orElse: () => const Center(child: CircularProgressIndicator()),
+                          orElse: () =>
+                              const Center(child: CircularProgressIndicator()),
                           data: (response) => SmartRefresher(
                             controller: _refreshController,
-                            enablePullUp: response.totalPages > response.currentPage,
+                            enablePullUp:
+                                response.totalPages > response.currentPage,
                             enablePullDown: false,
                             onLoading: () async {
                               if (searchController.text.isNotEmpty) {
                                 await ref
                                     .read(productNotifierProvider.notifier)
-                                    .searchProduct(keyword: searchController.text);
+                                    .searchProduct(
+                                        keyword: searchController.text);
                               } else {
-                                await ref.read(productNotifierProvider.notifier).getProducts();
+                                await ref
+                                    .read(productNotifierProvider.notifier)
+                                    .getProducts();
                               }
                               _refreshController.loadComplete();
                             },

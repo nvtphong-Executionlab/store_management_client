@@ -12,5 +12,8 @@ class StoreModel with _$StoreModel {
     required String storeName,
     required String address,
   }) = _StoreModel;
-  factory StoreModel.fromJson(Map<String, dynamic> json) => _$StoreModelFromJson(json);
+  factory StoreModel.fromJson(Map<String, dynamic> json) =>
+      _$StoreModelFromJson(json);
+  factory StoreModel.fromObjectJson(Object? json) =>
+      StoreModel.fromJson(json as Map<String, dynamic>);
 }

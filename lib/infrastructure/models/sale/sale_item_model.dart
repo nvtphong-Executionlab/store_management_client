@@ -10,7 +10,7 @@ class SaleItem with _$SaleItem {
   @JsonSerializable(fieldRename: FieldRename.pascal)
   const factory SaleItem({
     required int saleID,
-    required int ID, // productID
+    required String ID, // productID
     required int stock,
     required ProductModel product,
   }) = _SaleItem;

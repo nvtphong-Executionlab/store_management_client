@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'authen_interceptor.dart';
+part of 'store_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authInterceptorHash() => r'b7adeeaa22a707977f080274949e29d211b9b154';
+String _$storeNotifierHash() => r'c95e6f48b1e473def75ccd36d44b11662808109a';
 
-/// See also [authInterceptor].
-@ProviderFor(authInterceptor)
-final authInterceptorProvider =
-    AutoDisposeProvider<AuthenticationInterceptor>.internal(
-  authInterceptor,
-  name: r'authInterceptorProvider',
+/// See also [StoreNotifier].
+@ProviderFor(StoreNotifier)
+final storeNotifierProvider = AutoDisposeNotifierProvider<StoreNotifier,
+    PaginationResponse<StoreModel>>.internal(
+  StoreNotifier.new,
+  name: r'storeNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$authInterceptorHash,
+      : _$storeNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef AuthInterceptorRef = AutoDisposeProviderRef<AuthenticationInterceptor>;
+typedef _$StoreNotifier = AutoDisposeNotifier<PaginationResponse<StoreModel>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member

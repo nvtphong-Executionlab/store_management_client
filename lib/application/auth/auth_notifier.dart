@@ -14,28 +14,29 @@ class AuthState with _$AuthState {
   const factory AuthState.authenticating() = _Auththenticating;
   const factory AuthState.unAuthenticated() = _UnAuthenticated;
   const factory AuthState.error(String errorMessage) = _Error;
+  const factory AuthState.noStore() = _NoStore;
 }
 
 @riverpod
 class AuthNotifier extends _$AuthNotifier {
-  late final AuthRepository _authRepository;
   @override
   AuthState build() {
-    _authRepository = ref.watch(authRepoProvider);
     isExpiredToken();
     return const AuthState.unAuthenticated();
   }
 
   Future login(String username, String password) async {
     state = const AuthState.authenticating();
-    final res = await _authRepository.login(username, password);
-    state = res.fold((l) => const _Error('Login failed'), (r) => const AuthState.authenticated());
+    final res = await ref.watch(authRepoProvider).login(username, password);
+    state = res.fold((l) => const _Error('Login failed'),
+        (r) => const AuthState.authenticated());
   }
 
   Future signUp(String username, String password) async {
     state = const AuthState.authenticating();
-    final res = await _authRepository.signUp(username, password);
-    state = res.fold((l) => const _Error('Sign up failed'), (r) => const AuthState.unAuthenticated());
+    final res = await ref.watch(authRepoProvider).signUp(username, password);
+    state = res.fold((l) => const _Error('Sign up failed'),
+        (r) => const AuthState.unAuthenticated());
   }
 
   Future<bool> isExpiredToken() async {
@@ -51,7 +52,7 @@ class AuthNotifier extends _$AuthNotifier {
         state = const _UnAuthenticated();
         return true;
       } else {
-        state = const _Authenticated();
+        // state = const _Authenticated();
         return false;
       }
     } catch (e) {
@@ -62,5 +63,9 @@ class AuthNotifier extends _$AuthNotifier {
 
   Future logout() async {
     state = const _UnAuthenticated();
+  }
+
+  void noStore() {
+    state = const _NoStore();
   }
 }

@@ -20,7 +20,7 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProductModel {
-  int get ID => throw _privateConstructorUsedError;
+  String get ID => throw _privateConstructorUsedError;
   String get productName => throw _privateConstructorUsedError;
   int get stock => throw _privateConstructorUsedError;
   double get priceIn => throw _privateConstructorUsedError;
@@ -39,7 +39,11 @@ abstract class $ProductModelCopyWith<$Res> {
       _$ProductModelCopyWithImpl<$Res, ProductModel>;
   @useResult
   $Res call(
-      {int ID, String productName, int stock, double priceIn, double priceOut});
+      {String ID,
+      String productName,
+      int stock,
+      double priceIn,
+      double priceOut});
 }
 
 /// @nodoc
@@ -65,7 +69,7 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
       ID: null == ID
           ? _value.ID
           : ID // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       productName: null == productName
           ? _value.productName
           : productName // ignore: cast_nullable_to_non_nullable
@@ -95,7 +99,11 @@ abstract class _$$_ProductModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int ID, String productName, int stock, double priceIn, double priceOut});
+      {String ID,
+      String productName,
+      int stock,
+      double priceIn,
+      double priceOut});
 }
 
 /// @nodoc
@@ -119,7 +127,7 @@ class __$$_ProductModelCopyWithImpl<$Res>
       ID: null == ID
           ? _value.ID
           : ID // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       productName: null == productName
           ? _value.productName
           : productName // ignore: cast_nullable_to_non_nullable
@@ -145,7 +153,7 @@ class __$$_ProductModelCopyWithImpl<$Res>
 @JsonSerializable(fieldRename: FieldRename.pascal)
 class _$_ProductModel extends _ProductModel {
   _$_ProductModel(
-      {this.ID = 0,
+      {this.ID = '',
       this.productName = '',
       this.stock = 0,
       this.priceIn = 0.0,
@@ -157,7 +165,7 @@ class _$_ProductModel extends _ProductModel {
 
   @override
   @JsonKey()
-  final int ID;
+  final String ID;
   @override
   @JsonKey()
   final String productName;
@@ -211,7 +219,7 @@ class _$_ProductModel extends _ProductModel {
 
 abstract class _ProductModel extends ProductModel {
   factory _ProductModel(
-      {final int ID,
+      {final String ID,
       final String productName,
       final int stock,
       final double priceIn,
@@ -222,7 +230,7 @@ abstract class _ProductModel extends ProductModel {
       _$_ProductModel.fromJson;
 
   @override
-  int get ID;
+  String get ID;
   @override
   String get productName;
   @override

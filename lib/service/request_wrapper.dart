@@ -17,7 +17,9 @@ Future<Either<FailureModel, T>> requestWrapper<T>(Future<Response> call) async {
     return right(_mapJsonToData<T>(jsonData));
   } on DioException catch (err) {
     log('error ${err.response?.data}');
-    return left(FailureModel(code: err.response?.statusCode.toString(), message: err.response?.data.toString()));
+    return left(FailureModel(
+        code: err.response?.statusCode.toString(),
+        message: err.response?.data.toString()));
   } on Exception catch (err) {
     return left(FailureModel(code: '408', message: err.toString()));
   }
@@ -37,6 +39,9 @@ T _mapJsonToData<T>(dynamic json) {
       break;
     case const (PaginationResponse<SaleModel>):
       result = PaginationResponse.fromJson(json, SaleModel.fromObjectJson);
+      break;
+    case const (PaginationResponse<StoreModel>):
+      result = PaginationResponse.fromJson(json, StoreModel.fromObjectJson);
       break;
     case SaleModel:
       result = SaleModel.fromJson(json);
