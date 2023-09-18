@@ -24,8 +24,7 @@ class ProductScreen extends StatefulHookConsumerWidget {
 
 class _ProductScreenState extends ConsumerState<ProductScreen> {
   final fabkey = GlobalKey<ExpandableFabState>();
-  final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
 
   @override
   Widget build(BuildContext context) {
@@ -45,41 +44,21 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
           FloatingActionButton.small(
             heroTag: 'edit',
             onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                builder: (context) => Padding(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.viewInsetsOf(context).bottom),
-                  child: const CommonProductForm(
-                    productAction: ProductAction.edit,
-                  ),
-                ),
-              );
+              _buildAction(context, ProductAction.edit);
             },
             child: const Icon(Icons.edit),
           ),
           FloatingActionButton.small(
             heroTag: 'add',
             onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) => const CommonProductForm(
-                  productAction: ProductAction.add,
-                ),
-              );
+              _buildAction(context, ProductAction.add);
             },
             child: const Icon(Icons.add),
           ),
           FloatingActionButton.small(
             heroTag: 'remove',
             onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) => const CommonProductForm(
-                  productAction: ProductAction.delete,
-                ),
-              );
+              _buildAction(context, ProductAction.delete);
             },
             child: const Icon(Icons.remove),
           ),
@@ -100,9 +79,7 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         decoration: const BoxDecoration(
                           color: AppColors.primaryVeryLight,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10)),
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                         ),
                         child: const Row(
                           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,23 +104,18 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
                       child: DefaultTextStyle(
                         style: Theme.of(context).textTheme.labelMedium!,
                         child: asyncListProduct.maybeWhen(
-                          orElse: () =>
-                              const Center(child: CircularProgressIndicator()),
+                          orElse: () => const Center(child: CircularProgressIndicator()),
                           data: (response) => SmartRefresher(
                             controller: _refreshController,
-                            enablePullUp:
-                                response.totalPages > response.currentPage,
+                            enablePullUp: response.totalPages > response.currentPage,
                             enablePullDown: false,
                             onLoading: () async {
                               if (searchController.text.isNotEmpty) {
                                 await ref
                                     .read(productNotifierProvider.notifier)
-                                    .searchProduct(
-                                        keyword: searchController.text);
+                                    .searchProduct(keyword: searchController.text);
                               } else {
-                                await ref
-                                    .read(productNotifierProvider.notifier)
-                                    .getProducts();
+                                await ref.read(productNotifierProvider.notifier).getProducts();
                               }
                               _refreshController.loadComplete();
                             },
@@ -163,6 +135,20 @@ class _ProductScreenState extends ConsumerState<ProductScreen> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  void _buildAction(BuildContext context, ProductAction productAction) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => Container(
+        padding: MediaQuery.viewInsetsOf(context),
+        height: MediaQuery.sizeOf(context).height * 0.5 + MediaQuery.viewInsetsOf(context).bottom,
+        child: CommonProductForm(
+          productAction: productAction,
         ),
       ),
     );
